@@ -1,0 +1,221 @@
+@prefix : <http://www.oireachtas.ie/ontology#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@base <http://www.oireachtas.ie/ontology/agents> .
+
+<http://www.oireachtas.ie/ontology/agents> rdf:type owl:Ontology ;
+
+    rdfs:comment "Agents ontology for the Houses of the Oireachtas: persons, roles and organisations involved in the legislative process."@en ;
+
+    owl:imports <http://data.europa.eu/eli/ontology#> ,
+                <http://www.metalex.eu/metalex/2008-05-02> ,
+                org: .
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://www.oireachtas.ie/ontology#hasTerm
+###  A Chamber has a term (a specific House sitting for a bounded period)
+
+:hasTerm rdf:type owl:ObjectProperty ;
+
+         rdfs:domain :Chamber ;
+
+         rdfs:range :House ;
+
+         owl:inverseOf :termOf .
+
+
+###  http://www.oireachtas.ie/ontology#termOf
+
+:termOf rdf:type owl:ObjectProperty ;
+
+        skos:prefLabel "term of"@en ;
+
+        rdfs:domain :House ;
+
+        rdfs:range :Chamber .
+
+
+#################################################################
+#
+#    Restriction on imported property
+#
+#################################################################
+
+
+###  Restrict the range of eli:passed_by to :Oireachtas
+
+<http://data.europa.eu/eli/ontology#passed_by> rdfs:range :Oireachtas .
+
+
+#################################################################
+#
+#    Auxiliary class declarations (from imported vocabularies)
+#
+#################################################################
+
+
+###  http://www.w3.org/ns/org#FormalOrganization
+
+org:FormalOrganization rdf:type owl:Class .
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://www.oireachtas.ie/ontology#Oireachtas
+
+:Oireachtas rdf:type owl:Class ;
+
+            rdfs:subClassOf <http://rdaregistry.info/Elements/c/C10005> ,
+                            org:FormalOrganization ;
+
+            owl:disjointWith :PrivateSponsor ;
+
+            dc:title "Houses of the Oireachtas"@en ;
+            dc:title "Tithe an Oireachtas"@ga ;
+
+            rdfs:comment "Houses of the Oireachtas as a legislative and parliamentary body, does not include the Houses of the Oireachtas Service."@ga .
+
+
+###  http://www.oireachtas.ie/ontology#Chamber
+
+:Chamber rdf:type owl:Class ;
+
+         rdfs:subClassOf :Oireachtas ;
+
+         rdfs:comment "The Dáil, the Seanad or a committee chamber. A chamber in this context is a continuous entity associated with the physical location and the abstract concept of the debating chamber, as distinct from a House, which represents a specific Dáil or Seanad which exist for a period of time. It is also the physical site of a particular House."@en .
+
+
+###  http://www.oireachtas.ie/ontology#House
+
+:House rdf:type owl:Class ;
+
+       rdfs:subClassOf :Oireachtas ;
+
+       rdfs:comment "A term of the Dáil or Seanad lasting a period bounded by the election of Members/the commencement of sittings; and its dissolution. In the case of the pre-1936 Seanad, which formally sat continually between 1922 and 1936, the elections of 1922, 1925, 1928, 1931 and 1934 are are used as start-end periods, in line with convention."@en .
+
+
+###  http://www.oireachtas.ie/ontology#Government
+
+:Government rdf:type owl:Class ;
+
+            rdfs:subClassOf <http://www.metalex.eu/metalex/2008-05-02#Legislator> ,
+                            :BillSource ,
+                            :Oireachtas ;
+
+            skos:prefLabel "The Government"@en ;
+
+            rdfs:comment "The Government, as defined by the Constitution."@en .
+
+
+###  http://www.oireachtas.ie/ontology#BillSource
+
+:BillSource rdf:type owl:Class ;
+
+            rdfs:subClassOf <http://www.metalex.eu/metalex/2008-05-02#Legislator> ;
+
+            skos:prefLabel "Source of Bill"@en ;
+
+            rdfs:comment "The type of Bill, described as an agent, ie Government, Private Member or Private Sponsor"@en .
+
+
+###  http://www.oireachtas.ie/ontology#Member
+
+:Member rdf:type owl:Class ;
+
+        rdfs:subClassOf <http://rdaregistry.info/Elements/c/C10004> ,
+                        <http://www.metalex.eu/metalex/2008-05-02#Legislator> ;
+
+        owl:disjointWith :PrivateSponsor ;
+
+        rdfs:comment "A Member of one of the Houses of the Oireachtas"@en ;
+
+        skos:prefLabel "Member"@en .
+
+
+###  http://www.oireachtas.ie/ontology#Minister
+
+:Minister rdf:type owl:Class ;
+
+          rdfs:subClassOf :Member ;
+
+          skos:prefLabel "Minister"@en .
+
+
+###  http://www.oireachtas.ie/ontology#Mover
+
+:Mover rdf:type owl:Class ;
+
+       rdfs:subClassOf :Minister ,
+                       :PrivateMember .
+
+
+###  http://www.oireachtas.ie/ontology#PrivateMember
+
+:PrivateMember rdf:type owl:Class ;
+
+               rdfs:subClassOf <http://www.metalex.eu/metalex/2008-05-02#Legislator> ,
+                               :BillSource ,
+                               :Member ;
+
+               rdfs:comment "A Member of the Oireachtas who is not also a Member of Government"@en ;
+
+               skos:prefLabel "Private Member"@en .
+
+
+###  http://www.oireachtas.ie/ontology#PrivateSponsor
+
+:PrivateSponsor rdf:type owl:Class ;
+
+                rdfs:subClassOf <http://rdaregistry.info/Elements/c/C10004> ,
+                                <http://rdaregistry.info/Elements/c/C10005> ,
+                                :BillSource ;
+
+                rdfs:comment "A person or collective entity which introduces legislation to the Oireachtas"@en ;
+
+                skos:prefLabel "Private Sponsor"@en .
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://www.oireachtas.ie/house/dail
+
+<http://www.oireachtas.ie/house/dail> rdf:type :Chamber ,
+                                               owl:NamedIndividual ;
+
+                                      dct:title "Dáil Éireann"@ga ;
+
+                                      skos:prefLabel "Dáil Éireann"@ga .
+
+
+###  http://www.oireachtas.ie/house/seanad
+
+<http://www.oireachtas.ie/house/seanad> rdf:type :Chamber ,
+                                                 owl:NamedIndividual ;
+
+                                        dc:title "Seanad Éireann"@ga ;
+
+                                        skos:prefLabel "Seanad Éireann"@ga .
