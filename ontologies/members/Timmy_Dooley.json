@@ -1,0 +1,484 @@
+{
+        "member": {
+          "showAs": "Timmy Dooley",
+          "memberCode": "Timmy-Dooley.S.2002-09-12",
+          "lastName": "Dooley",
+          "memberships": [
+            {
+              "membership": {
+                "dateRange": {
+                  "end": "2024-11-29",
+                  "start": "2020-06-29"
+                },
+                "represents": [
+                  {
+                    "represent": {
+                      "representType": "panel",
+                      "showAs": "Nominated by the Taoiseach",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/house/seanad/26/panel/Nominated-by-the-Taoiseach",
+                      "representCode": "Nominated-by-the-Taoiseach"
+                    }
+                  }
+                ],
+                "house": {
+                  "houseCode": "seanad",
+                  "houseNo": "26",
+                  "showAs": "26th Seanad",
+                  "uri": "https://data.oireachtas.ie/ie/oireachtas/house/seanad/26",
+                  "chamberType": "house"
+                },
+                "committees": [
+                  {
+                    "committeeDateRange": {
+                      "end": "2021-12-09 00:00:00+00:00",
+                      "start": "2020-10-16 00:00:00+00:00"
+                    },
+                    "mainStatus": "Archived",
+                    "committeeName": [
+                      {
+                        "dateRange": {
+                          "end": null,
+                          "start": "2020-10-15 00:00:00+00:00"
+                        },
+                        "nameGa": "Roghchoiste Speisialta an tSeanaid um an Ríocht Aontaithe do Tharraingt Siar as an Aontas Eorpach",
+                        "nameEn": "Seanad Special Select Committee on the Withdrawal of the United Kingdom from the European Union"
+                      }
+                    ],
+                    "serviceUnit": "Committees' Secretariat",
+                    "status": "Archived",
+                    "committeeType": [
+                      "Policy"
+                    ],
+                    "committeeCode": "182",
+                    "committeeID": 182,
+                    "role": [],
+                    "uri": "https://data.oireachtas.ie/ie/oireachtas/committee/dail/33/seanad_special_committee_on_the_withdrawal_of_the_united_kingdom_from_the_european_union",
+                    "expiryType": "Special",
+                    "memberDateRange": {
+                      "end": "2021-12-09 00:00:00+00:00",
+                      "start": "2020-11-05 00:00:00+00:00"
+                    }
+                  },
+                  {
+                    "committeeDateRange": {
+                      "end": "2024-11-08 00:00:00+00:00",
+                      "start": "2020-09-18 00:00:00+00:00"
+                    },
+                    "houseCode": "dail",
+                    "committeeName": [
+                      {
+                        "dateRange": {
+                          "end": null,
+                          "start": "2021-05-24 00:00:00+00:00"
+                        },
+                        "nameGa": "An Comhchoiste um Chomhshaol agus Gníomhú ar son na hAeráide",
+                        "nameEn": "Joint Committee on Environment and Climate Action "
+                      }
+                    ],
+                    "mainStatus": "Archived",
+                    "serviceUnit": "Committees' Secretariat",
+                    "committeeType": [
+                      "Shadow Department"
+                    ],
+                    "committeeCode": "CAJ",
+                    "committeeID": 147,
+                    "role": [],
+                    "houseNo": 33,
+                    "uri": "https://data.oireachtas.ie/ie/oireachtas/committee/dail/33/joint_committee_on_environment_and_climate_action",
+                    "status": "Archived",
+                    "expiryType": "Sessional",
+                    "memberDateRange": {
+                      "end": "2024-11-08 00:00:00+00:00",
+                      "start": "2020-09-25 00:00:00+00:00"
+                    }
+                  },
+                  {
+                    "committeeDateRange": {
+                      "end": "2024-11-08 00:00:00+00:00",
+                      "start": "2020-09-18 00:00:00+00:00"
+                    },
+                    "houseCode": "dail",
+                    "committeeName": [
+                      {
+                        "dateRange": {
+                          "end": null,
+                          "start": "2021-05-24 00:00:00+00:00"
+                        },
+                        "nameGa": "An Comhchoiste um Iompar agus Cumarsáid",
+                        "nameEn": "Joint Committee on Transport and Communications"
+                      }
+                    ],
+                    "mainStatus": "Archived",
+                    "serviceUnit": "Committees' Secretariat",
+                    "committeeType": [
+                      "Shadow Department"
+                    ],
+                    "committeeCode": "TRJ",
+                    "committeeID": 163,
+                    "role": [],
+                    "houseNo": 33,
+                    "uri": "https://data.oireachtas.ie/ie/oireachtas/committee/dail/33/joint_committee_on_transport_and_communications",
+                    "status": "Archived",
+                    "expiryType": "Sessional",
+                    "memberDateRange": {
+                      "end": "2024-11-08 00:00:00+00:00",
+                      "start": "2020-09-25 00:00:00+00:00"
+                    }
+                  }
+                ],
+                "uri": "https://data.oireachtas.ie/ie/oireachtas/member/id/Timmy-Dooley.S.2002-09-12/house/seanad/26",
+                "offices": [],
+                "parties": [
+                  {
+                    "party": {
+                      "dateRange": {
+                        "end": "2024-11-29",
+                        "start": "2020-06-29"
+                      },
+                      "showAs": "Fianna Fáil",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/party/seanad/26/Fianna_Fáil",
+                      "partyCode": "Fianna_Fáil"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "membership": {
+                "dateRange": {
+                  "end": "2020-01-14",
+                  "start": "2016-03-10"
+                },
+                "represents": [
+                  {
+                    "represent": {
+                      "representType": "constituency",
+                      "showAs": "Clare",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/32/constituency/Clare",
+                      "representCode": "Clare"
+                    }
+                  }
+                ],
+                "house": {
+                  "houseCode": "dail",
+                  "houseNo": "32",
+                  "showAs": "32nd Dáil",
+                  "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/32",
+                  "chamberType": "house"
+                },
+                "committees": [
+                  {
+                    "committeeDateRange": {
+                      "end": "2020-01-14 00:00:00+00:00",
+                      "start": "2016-07-21 00:00:00+00:00"
+                    },
+                    "houseCode": "dail",
+                    "committeeName": [
+                      {
+                        "dateRange": {
+                          "end": null,
+                          "start": "2016-02-26 00:00:00+00:00"
+                        },
+                        "nameGa": "An Comhchoiste um Chumarsáid, Gníomhú ar son na hAeráide agus Comhshaol",
+                        "nameEn": "Joint Committee on Communications, Climate Action and Environment "
+                      }
+                    ],
+                    "mainStatus": "Archived",
+                    "serviceUnit": "Committees' Secretariat",
+                    "committeeType": [
+                      "Policy"
+                    ],
+                    "committeeCode": "CC2",
+                    "committeeID": 7,
+                    "role": [],
+                    "houseNo": 32,
+                    "uri": "https://data.oireachtas.ie/ie/oireachtas/committee/dail/32/joint_committee_on_communications_climate_action_and_environment",
+                    "status": "Archived",
+                    "expiryType": "Sessional",
+                    "memberDateRange": {
+                      "end": "2020-01-14 00:00:00+00:00",
+                      "start": "2016-06-16 00:00:00+00:00"
+                    }
+                  },
+                  {
+                    "committeeDateRange": {
+                      "end": "2020-01-14 00:00:00+00:00",
+                      "start": "2018-07-04 00:00:00+00:00"
+                    },
+                    "houseCode": "dail",
+                    "committeeName": [
+                      {
+                        "dateRange": {
+                          "end": null,
+                          "start": "2018-07-03 00:00:00+00:00"
+                        },
+                        "nameGa": "An Comhchoiste um Ghníomhú ar son na hAeráide",
+                        "nameEn": "Joint Committee on Climate Action"
+                      }
+                    ],
+                    "mainStatus": "Archived",
+                    "serviceUnit": "Committees' Secretariat",
+                    "committeeType": [
+                      "Policy"
+                    ],
+                    "committeeCode": "CAJ",
+                    "committeeID": 75,
+                    "role": [],
+                    "houseNo": 32,
+                    "uri": "https://data.oireachtas.ie/ie/oireachtas/committee/dail/32/joint_committee_on_climate_action",
+                    "status": "Archived",
+                    "expiryType": "Special",
+                    "memberDateRange": {
+                      "end": "2020-01-14 00:00:00+00:00",
+                      "start": "2018-07-04 00:00:00+00:00"
+                    }
+                  },
+                  {
+                    "committeeDateRange": {
+                      "end": "2020-01-14 00:00:00+00:00",
+                      "start": "2016-06-16 00:00:00+00:00"
+                    },
+                    "mainStatus": "Archived",
+                    "committeeName": [
+                      {
+                        "dateRange": {
+                          "end": null,
+                          "start": "2016-02-26 00:00:00+00:00"
+                        },
+                        "nameGa": "An Roghchoiste um Chumarsáid, Gníomhú ar son na hAeráide agus Comhshaol",
+                        "nameEn": "Select Committee on Communications, Climate Action and Environment "
+                      }
+                    ],
+                    "serviceUnit": "Committees' Secretariat",
+                    "status": "Archived",
+                    "committeeType": [
+                      "Policy"
+                    ],
+                    "committeeCode": "CC1",
+                    "committeeID": 8,
+                    "role": [],
+                    "uri": "https://data.oireachtas.ie/ie/oireachtas/committee/dail/32/select_committee_on_communications_climate_action_and_environment",
+                    "expiryType": "Sessional",
+                    "memberDateRange": {
+                      "end": "2020-01-14 00:00:00+00:00",
+                      "start": "2016-06-16 00:00:00+00:00"
+                    }
+                  }
+                ],
+                "uri": "https://data.oireachtas.ie/ie/oireachtas/member/id/Timmy-Dooley.S.2002-09-12/house/dail/32",
+                "offices": [],
+                "parties": [
+                  {
+                    "party": {
+                      "dateRange": {
+                        "end": "2020-01-14",
+                        "start": "2016-03-10"
+                      },
+                      "showAs": "Fianna Fáil",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/party/dail/32/Fianna_Fáil",
+                      "partyCode": "Fianna_Fáil"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "membership": {
+                "dateRange": {
+                  "end": "2007-07-22",
+                  "start": "2002-09-12"
+                },
+                "represents": [
+                  {
+                    "represent": {
+                      "representType": "panel",
+                      "showAs": "Administrative Panel",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/house/seanad/22/panel/Administrative-Panel",
+                      "representCode": "Administrative-Panel"
+                    }
+                  }
+                ],
+                "house": {
+                  "houseCode": "seanad",
+                  "houseNo": "22",
+                  "showAs": "22nd Seanad",
+                  "uri": "https://data.oireachtas.ie/ie/oireachtas/house/seanad/22",
+                  "chamberType": "house"
+                },
+                "committees": [],
+                "uri": "https://data.oireachtas.ie/ie/oireachtas/member/id/Timmy-Dooley.S.2002-09-12/house/seanad/22",
+                "offices": [],
+                "parties": [
+                  {
+                    "party": {
+                      "dateRange": {
+                        "end": "2007-07-22",
+                        "start": "2002-09-12"
+                      },
+                      "showAs": "Fianna Fáil",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/party/seanad/22/Fianna_Fáil",
+                      "partyCode": "Fianna_Fáil"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "membership": {
+                "dateRange": {
+                  "end": null,
+                  "start": "2024-11-29"
+                },
+                "represents": [
+                  {
+                    "represent": {
+                      "representType": "constituency",
+                      "showAs": "Clare",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/34/constituency/Clare",
+                      "representCode": "Clare"
+                    }
+                  }
+                ],
+                "house": {
+                  "houseCode": "dail",
+                  "houseNo": "34",
+                  "showAs": "34th Dáil",
+                  "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/34",
+                  "chamberType": "house"
+                },
+                "committees": [],
+                "uri": "https://data.oireachtas.ie/ie/oireachtas/member/id/Timmy-Dooley.S.2002-09-12/house/dail/34",
+                "offices": [
+                  {
+                    "office": {
+                      "dateRange": {
+                        "end": "2025-06-01",
+                        "start": "2025-02-25"
+                      },
+                      "officeName": {
+                        "showAs": "Minister of State at the Department of Agriculture, Food and the Marine and at the Department of the Environment, Climate and Communications",
+                        "uri": null
+                      }
+                    }
+                  },
+                  {
+                    "office": {
+                      "dateRange": {
+                        "end": null,
+                        "start": "2025-06-02"
+                      },
+                      "officeName": {
+                        "showAs": "Minister of State at the Department of Agriculture, Food and the Marine and at the Department of Climate, Energy and the Environment",
+                        "uri": null
+                      }
+                    }
+                  }
+                ],
+                "parties": [
+                  {
+                    "party": {
+                      "dateRange": {
+                        "end": null,
+                        "start": "2024-11-29"
+                      },
+                      "showAs": "Fianna Fáil",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/party/dail/34/Fianna_Fáil",
+                      "partyCode": "Fianna_Fáil"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "membership": {
+                "dateRange": {
+                  "end": "2016-03-09",
+                  "start": "2011-03-09"
+                },
+                "represents": [
+                  {
+                    "represent": {
+                      "representType": "constituency",
+                      "showAs": "Clare",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/31/constituency/Clare",
+                      "representCode": "Clare"
+                    }
+                  }
+                ],
+                "house": {
+                  "houseCode": "dail",
+                  "houseNo": "31",
+                  "showAs": "31st Dáil",
+                  "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/31",
+                  "chamberType": "house"
+                },
+                "committees": [],
+                "uri": "https://data.oireachtas.ie/ie/oireachtas/member/id/Timmy-Dooley.S.2002-09-12/house/dail/31",
+                "offices": [],
+                "parties": [
+                  {
+                    "party": {
+                      "dateRange": {
+                        "end": "2016-03-09",
+                        "start": "2011-02-25"
+                      },
+                      "showAs": "Fianna Fáil",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/party/dail/31/Fianna_Fáil",
+                      "partyCode": "Fianna_Fáil"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "membership": {
+                "dateRange": {
+                  "end": "2011-02-01",
+                  "start": "2007-06-14"
+                },
+                "represents": [
+                  {
+                    "represent": {
+                      "representType": "constituency",
+                      "showAs": "Clare",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/30/constituency/Clare",
+                      "representCode": "Clare"
+                    }
+                  }
+                ],
+                "house": {
+                  "houseCode": "dail",
+                  "houseNo": "30",
+                  "showAs": "30th Dáil",
+                  "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/30",
+                  "chamberType": "house"
+                },
+                "committees": [],
+                "uri": "https://data.oireachtas.ie/ie/oireachtas/member/id/Timmy-Dooley.S.2002-09-12/house/dail/30",
+                "offices": [],
+                "parties": [
+                  {
+                    "party": {
+                      "dateRange": {
+                        "end": "2011-02-01",
+                        "start": "2007-05-24"
+                      },
+                      "showAs": "Fianna Fáil",
+                      "uri": "https://data.oireachtas.ie/ie/oireachtas/party/dail/30/Fianna_Fáil",
+                      "partyCode": "Fianna_Fáil"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "pId": "TimDooley",
+          "dateOfDeath": null,
+          "firstName": "Timmy",
+          "gender": "",
+          "wikiTitle": null,
+          "uri": "https://data.oireachtas.ie/ie/oireachtas/member/id/Timmy-Dooley.S.2002-09-12",
+          "fullName": "Timmy Dooley",
+          "image": false
+        }
+      }

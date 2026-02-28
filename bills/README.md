@@ -15,7 +15,7 @@ The Bill as legislative document is also associated with certain metadata about 
 
 URIs for Bills as legislative documents have the following pattern:
 
-    http://oireachtas.ie/ie/bill/{year}/{order number}/{language}@{version}/{main component}/{sub component}{format extension}
+    https://data.oireachtas.ie/ie/bill/{year}/{order number}/{language}@{version}/{main component}/{sub component}{format extension}
 
 The following table provides example uses of the pattern:
 
@@ -43,7 +43,7 @@ The following table provides example uses of the pattern:
 
 The URI pattern for Bill events is as follows:
 
-    http://oireachtas.ie/ie/bill/{year}/{order number}/{house}/{event context}/{event topic}
+    https://data.oireachtas.ie/ie/bill/{year}/{order number}/{house}/{event context}/{event topic}
 
 These URI patterns can be distinguished from version URIs because name of House will be in place of language/version element
 
@@ -114,19 +114,19 @@ The following table lists the label and skos:conceptScheme vocabulary for Bill i
 | eli:uri_schema      |                                |                                     |                                                        | URL for resource describing schema??                                                                       |
 | eli:id_local        |                                | Bill Resource, Expression, Format   | either Bill URI or {year}-{no}                         |                                                                                                            |
 | eli:type_document   |                                | Bill Resource                       | eil:ResourceType                                       | Eg, Bill, Act, Explanatory Memorandum or Draft Bill. Consult w A.G.                                        |
-| eli:passed_by       |                                | Bill Resource (final stage)         | oir:oireachtas                                         | Perhaps oireachtas.ie should be the URI for the body corporate                                             |
+| eli:passed_by       |                                | Bill Resource (final stage)         | oir:oireachtas                                         | Perhaps https://data.oireachtas.ie should be the URI for the body corporate                                             |
 | eli:date_document   |                                | Bill Resource                       | xsd:Date                                               | Date of President's signature                                                                              |
 | eli:related_to      |                                | Bill Resource/Expression            | owl:Thing                                              | Use to relate to draft/heads of Bills, explanatory memos                                                   |
 | eli:language        |                                | Bill Expression                     | lang:ENG, lang:GLE or lang:MUL                         |                                                                                                            |
 | eli:title           |                                | Bill Expression                     | xsd:string(lang en or ga)                              | Short title, used for versions (LegalExpression) of Bill                                                   |
-| eli:published_in    |                                | Bill Format                         | eg, http://oireachtas.ie/legislative_observatory       | "publication in which legal resource is published", eg, website                                            |
+| eli:published_in    |                                | Bill Format                         | eg, https://data.oireachtas.ie/legislative_observatory       | "publication in which legal resource is published", eg, website                                            |
 | eli:description     |                                | Bill Resource/Expression            | xsd:string(lang en or ga)                              | Bill long title                                                                                            |
 | eli:publisher       |                                | Bill Expression/Format              | xsd:String - "Houses of the Oireachtas Service"        | Or just "Houses of the Oireachtas" for historical compliance                                               |
 | eli:format          |                                | Bill Format                         | eg iana:text/xml, iana:text/html, iana:application/pdf |                                                                                                            |
 | eli:version         |                                | Bill Expression                     | eg, oir:as_initiated                                   | See concept scheme                                                                                         |
 | eli:version_date    |                                | Bill Expression                     | xsd:Date                                               | Date presented, passed or ordered to be printed                                                            |
 | eli:rightsholder    |                                | Bill Format                         | xsd:AnyURI oir:oireachtas                              |                                                                                                            |
-| eli:licence         |                                | Bill Format                         | xsd:AnyURI "http://oireachtas.ie/licence"              |                                                                                                            |
+| eli:licence         |                                | Bill Format                         | xsd:AnyURI "https://data.oireachtas.ie/licence"              |                                                                                                            |
 | eli:legal_value     |                                | Bill Format                         | probably eli:LegalValue-authoritive                    |                                                                                                            |
 | dcterms:title       |                                | Bill Resource                       | xsd:string(lang en or ga)                              | Short title, for work (LegalResource) of Bill                                                              |
 |                     |                                |                                     |                                                        |                                                                                                            |
