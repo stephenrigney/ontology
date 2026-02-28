@@ -65,9 +65,9 @@ Elements of the [Data Catalog vocabulary (DCAT)](www.w3.org/TR/vocab-dcat/) will
 
 #### URIs
 
-The namespace for the Oireachtas ontology is ``http://oireachtas.ie/ontology#``. The string ``oir:`` denotes that the following term is in the Oireachtas namespace. Class names are in camel case with all first letters of words capitalised: ``oir:BillFormat``. Property names are camel case with the very first letter in lower case: ``oir:amendedBy``
+The namespace for the Oireachtas ontology is ``https://data.oireachtas.ie/ontology#``. The string ``oir:`` denotes that the following term is in the Oireachtas namespace. Class names are in camel case with all first letters of words capitalised: ``oir:BillFormat``. Property names are camel case with the very first letter in lower case: ``oir:amendedBy``
 
-The namespace for URLs of instances of classes is ``http://oireachtas.ie`` and the patterns will be further described in the relevant sections.
+The namespace for URLs of instances of classes is ``https://data.oireachtas.ie`` and the patterns will be further described in the relevant sections.
 
 #### Schema Overview
 
@@ -98,6 +98,6 @@ Some things within the ontology cannot be categorised neatly in to one category.
 |---------|-----------------------------------------------------------|
 | eli     | http://data.europa.eu/eli/ontology#                       |
 | lang    | http://publications.europa.eu/resource/authority/language |
-| oir     | http://oireachtas.ie/ontology#                            |
+| oir     | https://data.oireachtas.ie/ontology#                            |
 | iana    | http://www.iana.org/assignments/media-types/              |
 | metalex | http://www.metalex.eu/metalex/2008-05-02#                 |

@@ -3,7 +3,6 @@
 @prefix eli: <http://data.europa.eu/eli/ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix frbr: <http://purl.org/vocab/frbr/core#> .
-@prefix metalex: <http://www.metalex.eu/metalex/2008-05-02#> .
 @prefix oir: <http://oireachtas.ie/ontology#> .
 @prefix org: <http://www.w3.org/ns/org#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .

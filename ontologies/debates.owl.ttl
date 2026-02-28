@@ -1,0 +1,23 @@
+@prefix : <https://data.oireachtas.ie/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://data.oireachtas.ie/ontology/debates> .
+
+<https://data.oireachtas.ie/ontology/debates> rdf:type owl:Ontology ;
+
+    rdfs:comment """Debates ontology for the Houses of the Oireachtas.
+
+Reserved for future classes and properties covering:
+- Elements of the Official Report (transcribed record of debates in chambers)
+- Parliamentary questions and answers
+- Contributions (who said what, when, in which chamber)
+- Votes and divisions
+- References from debates to journal events and legislative documents
+
+Anticipated imports: events.owl, agents.owl"""@en ;
+
+    owl:imports <https://data.oireachtas.ie/ontology/events> ,
+                <https://data.oireachtas.ie/ontology/agents> .

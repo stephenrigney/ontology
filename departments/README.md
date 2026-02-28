@@ -25,24 +25,24 @@ minister_state/social__protection
 
 For ministerial or Cabinet roles:
 
-http://oireachtas.ie/taoiseach
-http://oireachtas.ie/tanaiste
+https://data.oireachtas.ie/taoiseach
+https://data.oireachtas.ie/tanaiste
 
-http://oireachtas.ie/minister/{specific title}
-http://oireachtas.ie/minister_state/{specific title}
+https://data.oireachtas.ie/minister/{specific title}
+https://data.oireachtas.ie/minister_state/{specific title}
 
-http://oireachtas.ie/minister_without_portfolio
+https://data.oireachtas.ie/minister_without_portfolio
 
 Where a Departmental function is a phrase rather than a single
 
 
-http://oireachtas.ie/department/{department specific name}
-http://oireachtas.ie/department/transport__tourism__sport
+https://data.oireachtas.ie/department/{department specific name}
+https://data.oireachtas.ie/department/transport__tourism__sport
 
 For departmental functions or areas:
 
-http://oireachtas.ie/department/function/{function}/{SI date}
-http://oireachtas.ie/department/function/transport/2011-03-29
+https://data.oireachtas.ie/department/function/{function}/{SI date}
+https://data.oireachtas.ie/department/function/transport/2011-03-29
 
 The Statutory Instrument date (SI) is either the date of the SI published under the 1930 Act or the appointment date in the case of SIs for other Ministers and Secretaries Acts.
 

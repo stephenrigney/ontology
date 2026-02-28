@@ -5,6 +5,7 @@ ontologies/ directory, and reports classes, properties and individuals.
 Also runs the HermiT OWL reasoner (via owlready2) for consistency checking.
 
 Run:  python validate.py
+
 Requires: pip install rdflib owlready2
 Also requires Java on PATH (for the bundled HermiT reasoner).
 """
@@ -19,20 +20,21 @@ from owlready2 import get_ontology, sync_reasoner
 
 ONTOLOGIES_DIR = Path(__file__).parent / "ontologies"
 
-# Map ontology IRIs to local file paths
-IRI_TO_FILE = {
-    "http://www.oireachtas.ie/ontology":           ONTOLOGIES_DIR / "oireachtas.owl",
-    "http://www.oireachtas.ie/ontology/agents":     ONTOLOGIES_DIR / "agents.owl",
-    "http://www.oireachtas.ie/ontology/events":     ONTOLOGIES_DIR / "events.owl",
-    "http://www.oireachtas.ie/ontology/legislative": ONTOLOGIES_DIR / "legislative.owl",
-    "http://www.oireachtas.ie/ontology/vocabulary": ONTOLOGIES_DIR / "vocabulary.owl",
-    "http://www.oireachtas.ie/ontology/debates":    ONTOLOGIES_DIR / "debates.owl",
-}
+# Local ontology files to load
+ONTOLOGY_FILES = [
+    ONTOLOGIES_DIR / "oireachtas.owl.ttl",
+    ONTOLOGIES_DIR / "agents.owl.ttl",
+    ONTOLOGIES_DIR / "events.owl.ttl",
+    ONTOLOGIES_DIR / "legislation.owl.ttl",
+    ONTOLOGIES_DIR / "vocabulary.owl.ttl",
+    ONTOLOGIES_DIR / "debates.owl.ttl",
+    ONTOLOGIES_DIR / "members.owl.ttl",
+]
 
-def load_all(iri_to_file):
+def load_all(paths):
     """Parse all local ontology files into a single merged graph."""
     g = Graph()
-    for iri, path in iri_to_file.items():
+    for path in paths:
         print(f"  Parsing {path.name} ...", end=" ")
         try:
             g.parse(str(path), format="turtle")
@@ -47,7 +49,7 @@ def short(uri):
     return uri.split("#")[-1] if "#" in uri else uri.split("/")[-1]
 
 print("=== Loading ontologies ===")
-g = load_all(IRI_TO_FILE)
+g = load_all(ONTOLOGY_FILES)
 print(f"\nTotal triples loaded: {len(g)}\n")
 
 # --- Classes ---
