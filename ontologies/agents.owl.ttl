@@ -51,6 +51,19 @@
         rdfs:range :House .
 
 
+###  https://data.oireachtas.ie/ontology#hasCommitteeType
+
+:hasCommitteeType rdf:type owl:ObjectProperty ;
+
+                  rdfs:domain <https://data.oireachtas.ie/ontology/members#Committee> ;
+
+                  rdfs:range skos:Concept ;
+
+                  rdfs:comment "The type of parliamentary committee (e.g. Select, Joint, Special). Range drawn from the :CommitteeTypeTable concept scheme defined in vocabulary.owl."@en ;
+
+                  skos:prefLabel "Has committee type"@en .
+
+
 #################################################################
 ##    Datatype Properties
 #
@@ -91,6 +104,12 @@
 
 <http://data.europa.eu/eli/eli-draft-legislation-ontology#had_participation>
     rdfs:comment "Use eli-dl:had_participation on eli-dl:LegislativeActivity instances (including :JournalEvent subclasses) to record agent participation. Set eli-dl:participation_role to :MoverRole or :RapporteurRole (defined in members.owl) to distinguish the role. This replaces the former :Mover class."@en .
+
+
+###  members:Committee — URI pattern for individual committee instances
+
+<https://data.oireachtas.ie/ontology/members#Committee>
+    rdfs:comment "Individual committee instances use the URI pattern <https://data.oireachtas.ie/ie/oireachtas/committee/{slug}/{term-no}>, e.g. <https://data.oireachtas.ie/ie/oireachtas/committee/select_committee_on_finance/34>. The {slug} matches the segment used in debates[].uri in the bill API response, enabling the IRI to be derived directly from existing data. Committee type is expressed via :hasCommitteeType with members from :CommitteeTypeTable."@en .
 
 
 #################################################################
@@ -261,3 +280,67 @@ eli-dl:Participation rdf:type owl:Class .
                                         dct:title "Seanad Éireann"@ga ;
 
                                         skos:prefLabel "Seanad Éireann"@ga .
+
+
+#################################################################
+#
+#    Individuals — Bill source submitters (eli-dl:was_submitted_by targets)
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ie/oireachtas/def/bill-source/government
+
+<https://data.oireachtas.ie/ie/oireachtas/def/bill-source/government>
+    rdf:type :Government , owl:NamedIndividual ;
+    skos:prefLabel "The Government"@en ;
+    skos:altLabel "Cabinet"@en ;
+    rdfs:comment "Named individual for the Government as a bill source. Use as the target of eli-dl:was_submitted_by when bill.sourceURI = 'https://data.oireachtas.ie/ie/oireachtas/def/bill-source/government'."@en .
+
+
+###  https://data.oireachtas.ie/ie/oireachtas/def/bill-source/private-member
+
+<https://data.oireachtas.ie/ie/oireachtas/def/bill-source/private-member>
+    rdf:type :PrivateMember , owl:NamedIndividual ;
+    skos:prefLabel "Private Member"@en ;
+    rdfs:comment "Named individual for a Private Member as a bill source. Use as the target of eli-dl:was_submitted_by when bill.sourceURI = 'https://data.oireachtas.ie/ie/oireachtas/def/bill-source/private-member'."@en .
+
+
+#################################################################
+#
+#    Individuals — Committee types (members of :CommitteeTypeTable)
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#SelectCommitteeType
+
+:SelectCommitteeType rdf:type owl:NamedIndividual , skos:Concept ;
+
+                     skos:prefLabel "Select Committee"@en ;
+
+                     skos:inScheme :CommitteeTypeTable ;
+
+                     skos:topConceptOf :CommitteeTypeTable .
+
+
+###  https://data.oireachtas.ie/ontology#JointCommitteeType
+
+:JointCommitteeType rdf:type owl:NamedIndividual , skos:Concept ;
+
+                    skos:prefLabel "Joint Committee"@en ;
+
+                    skos:inScheme :CommitteeTypeTable ;
+
+                    skos:topConceptOf :CommitteeTypeTable .
+
+
+###  https://data.oireachtas.ie/ontology#SpecialCommitteeType
+
+:SpecialCommitteeType rdf:type owl:NamedIndividual , skos:Concept ;
+
+                      skos:prefLabel "Special Committee"@en ;
+
+                      skos:inScheme :CommitteeTypeTable ;
+
+                      skos:topConceptOf :CommitteeTypeTable .
