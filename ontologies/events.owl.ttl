@@ -88,6 +88,52 @@ time:ProperInterval rdf:type owl:Class ;
        rdfs:range :EventDate .
 
 
+###  https://data.oireachtas.ie/ontology#mostRecentStage
+
+:mostRecentStage rdf:type owl:ObjectProperty ;
+
+                 rdfs:domain eli-dl:DraftLegislationWork ;
+
+                 rdfs:range eli-dl:LegislativeActivity ;
+
+                 rdfs:comment "Points to the most recently completed stage in the bill's legislative process. Equivalent to the stage with the highest :progressStage value among completed stages. Maintained as a denormalised convenience pointer."@en ;
+
+                 skos:prefLabel "Most recent stage"@en .
+
+
+#################################################################
+#
+#    Datatype Properties
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#progressStage
+
+:progressStage rdf:type owl:DatatypeProperty ;
+
+               rdfs:domain eli-dl:LegislativeActivity ;
+
+               rdfs:range xsd:positiveInteger ;
+
+               rdfs:comment "An integer giving the canonical sequential order of a Bill stage across both houses (1 = First Stage Dáil … 10 = Enacted). Used to order stages irrespective of house."@en ;
+
+               skos:prefLabel "Progress stage"@en .
+
+
+###  https://data.oireachtas.ie/ontology#stageNo
+
+:stageNo rdf:type owl:DatatypeProperty ;
+
+         rdfs:domain eli-dl:AmendmentToDraftLegislationWork ;
+
+         rdfs:range xsd:positiveInteger ;
+
+         rdfs:comment "The stage number within a single house at which an amendment list was tabled (e.g., 3 = Committee Stage, 4 = Report Stage)."@en ;
+
+         skos:prefLabel "Stage number"@en .
+
+
 #################################################################
 #
 #    Classes
@@ -536,6 +582,34 @@ time:ProperInterval rdf:type owl:Class ;
            skos:topConceptOf :BillEventTable ;
 
            skos:inScheme :BillEventTable .
+
+
+###  https://data.oireachtas.ie/ontology#Published
+
+:Published rdf:type :BillEvent ,
+                    owl:NamedIndividual ;
+
+           skos:prefLabel "Published"@en ;
+
+           rdfs:comment "The event of a Bill being published and made available. A single Bill may carry multiple publication dates (e.g., as initiated and as enacted Act)."@en ;
+
+           skos:inScheme :BillEventTable ;
+
+           skos:topConceptOf :BillEventTable .
+
+
+###  https://data.oireachtas.ie/ontology#Enacted
+
+:Enacted rdf:type :BillEvent ,
+                  owl:NamedIndividual ;
+
+         skos:prefLabel "Enacted"@en ;
+
+         rdfs:comment "The event of a Bill being signed into law by the President, creating an Act."@en ;
+
+         skos:inScheme :BillEventTable ;
+
+         skos:topConceptOf :BillEventTable .
 
 
 #################################################################

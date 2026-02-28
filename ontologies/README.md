@@ -83,6 +83,12 @@ Defines the organisations, roles and persons involved in the legislative process
 | `:hasTerm` | `:House` | `:HouseTerm` | `owl:inverseOf :termOf` |
 | `:termOf` | `:HouseTerm` | `:House` | |
 
+#### Datatype Properties
+
+| Property | Domain | Range | Notes |
+|---|---|---|---|
+| `:isPrimarySponsor` | `eli-dl:Participation` | `xsd:boolean` | `true` for the primary bill sponsor; false/absent for secondary sponsors |
+
 #### Annotations on imported properties
 
 | Property | Annotation |
@@ -115,6 +121,8 @@ Defines the detailed membership, role and party structures of the Houses of the 
 > **Government three-tier refactoring (2026):** `members:Government` (whip side) renamed to `members:GovernmentBenches`. Former vestigial `members:Cabinet` class (incorrectly a subclass of the whip side) removed — the constitutional Cabinet is `agents:Government`. Three tiers now defined: (1) `agents:Government` — constitutional executive body, membership confined to `members:CabinetMember` role-holders (TaoiseachRole, TanaisteRole, MinisterRole); (2) `members:GovernmentExecutive` — Government plus `members:MinisterOfStateRole` role-holders; (3) `members:GovernmentBenches` — GovernmentExecutive plus other OireachtasMembers under the government whip. `members:MinisterOfStateRole` and `members:MinisterOfStateMembership` added; `MinisterOfStateRole owl:disjointWith CabinetMember`. `:isHeadOf` and `:isDeputyHeadOf` re-ranged to `agents:Government`. Four sub-properties added: `:isHeadOfExecutive`, `:isHeadOfBenches` (sub-properties of `:isHeadOf`, domain `:TaoiseachRole`) and `:isDeputyHeadOfExecutive`, `:isDeputyHeadOfBenches` (sub-properties of `:isDeputyHeadOf`, domain `:TanaisteRole`) to assert headship at each wider tier. `:PartyInGovernment` allValuesFrom updated to `members:GovernmentBenches`.
 >
 > **Role class rename (2026):** All four `members` role classes renamed for unambiguous person/role distinction: `members:Minister` → `members:MinisterRole`, `members:Taoiseach` → `members:TaoiseachRole`, `members:Tanaiste` → `members:TanaisteRole`, `members:MinisterOfState` → `members:MinisterOfStateRole`. `org:holds` / `org:heldBy` bridge axioms added in `members.owl` connecting `agents:Minister` (person) ↔ `members:MinisterRole` (role). `rdfs:comment` added to `agents:Minister` cross-referencing the bridge.
+>
+> **bill.json alignment (2026):** `:isPrimarySponsor` datatype property (`xsd:boolean`) added on `eli-dl:Participation` to capture the `sponsors[].sponsor.isPrimary` flag. Set `true` on the primary sponsor's participation instance.
 
 #### Classes (selected)
 
@@ -182,6 +190,8 @@ Defines the detailed membership, role and party structures of the Houses of the 
 
 Defines the procedural events that occur during a Bill's lifecycle, including stages, delivery methods and outcomes.
 
+> **bill.json alignment (2026):** `:progressStage` and `:stageNo` datatype properties added to represent the cross-house stage ordering integer and per-house amendment list stage number respectively. `:mostRecentStage` object property added as a denormalised convenience pointer to the current stage. `:Published` and `:Enacted` named individuals added to the `BillEventTable` concept scheme to cover the `bill.events[]` lifecycle events.
+
 #### Classes
 
 | Class | Superclass(es) | Description |
@@ -203,6 +213,14 @@ Defines the procedural events that occur during a Bill's lifecycle, including st
 | `:commenced` | `time:TemporalEntity` | `:EventDate` |
 | `:elected` | `time:TemporalEntity` | `:EventDate` |
 | `:ended` | `time:TemporalEntity` | `:EventDate` |
+| `:mostRecentStage` | `eli-dl:DraftLegislationWork` | `eli-dl:LegislativeActivity` |
+
+#### Datatype Properties
+
+| Property | Domain | Range | Notes |
+|---|---|---|---|
+| `:progressStage` | `eli-dl:LegislativeActivity` | `xsd:positiveInteger` | Cross-house sequential order (1 = First Stage Dáil … 10 = Enacted) |
+| `:stageNo` | `eli-dl:AmendmentToDraftLegislationWork` | `xsd:positiveInteger` | Stage within a single house at which an amendment list was tabled |
 
 #### Named Individuals — Bill Stages
 
@@ -210,7 +228,7 @@ Defines the procedural events that occur during a Bill's lifecycle, including st
 
 #### Named Individuals — Other Bill Events
 
-`BallotOrder`, `BillAmend`, `BillAmend2Amend`, `BillRecommendation`, `DailAmdSeanad`, `DischargeOrderSecondStage`, `DischargeSecondStage`, `EarlySign`, `FinancialResolution`, `InstrCommittee`, `LeaveToWithdraw`, `RecommitBill`, `RefCommittee`, `RestoreBill`, `SeanadAmdDail`, `VoterInfo`
+`BallotOrder`, `BillAmend`, `BillAmend2Amend`, `BillRecommendation`, `DailAmdSeanad`, `DischargeOrderSecondStage`, `DischargeSecondStage`, `EarlySign`, `FinancialResolution`, `InstrCommittee`, `LeaveToWithdraw`, `RecommitBill`, `RefCommittee`, `RestoreBill`, `SeanadAmdDail`, `VoterInfo`, `Published`, `Enacted`
 
 #### Named Individuals — Bill Event Outcomes
 
@@ -241,6 +259,8 @@ Defines the procedural events that occur during a Bill's lifecycle, including st
 Defines the legislative documents published by the Oireachtas, including Bills, Acts, versions, expressions, formats and statuses.
 
 > **ELI-DL migration (2026):** All local subclasses have been eliminated. Each is now replaced by the appropriate ELI-DL or ELI class used directly. The local `metalex` import has been replaced by `eli-dl`. The `:OriginalTitle` data property has been removed in favour of `dct:alternative`.
+>
+> **bill.json alignment (2026):** `:hasBillType` property and `:PublicBill` / `:PrivateBill` individuals added. `:dateSigned` (sub-property of `eli:date_document`) added for presidential signature date. `:statuteBookURI` (sub-property of `dct:relation`) added for Irish Statute Book cross-references. `:hasAmendmentListType` property and `:NumberedAmendmentList` / `:UnnumberedAmendmentList` individuals added. `:Errata` and `:Gluais` resource type individuals added. `dct:modified` annotated for API record update timestamps.
 
 #### Eliminated local classes — use ELI-DL/ELI equivalents directly
 
@@ -262,10 +282,29 @@ Defines the legislative documents published by the Oireachtas, including Bills, 
 | `eli:title_alternative` | `rdfs:label "Long title of a Bill"` |
 | `eli:title` | `rdfs:label "Short title of a Bill"` |
 | `eli:basis_for` | `rdfs:comment "A Bill is the basis for an Act"` |
+| `dct:modified` | Timestamp of last API record update; applied to `eli-dl:DraftLegislationWork` instances (`xsd:dateTime`) |
+
+#### Object Properties
+
+| Property | Domain | Range | Notes |
+|---|---|---|---|
+| `:hasBillType` | `eli-dl:DraftLegislationWork` | `eli:ResourceType` | Classifies a Bill as `:PublicBill` or `:PrivateBill` |
+| `:hasAmendmentListType` | `eli-dl:AmendmentToDraftLegislationWork` | `skos:Concept` | Numbered or unnumbered list type, drawn from `:AmendmentListTypeTable` |
+| `:statuteBookURI` | `eli:LegalResource` | `rdfs:Resource` | Cross-reference to the Irish Statute Book ELI URI; sub-property of `dct:relation` |
+
+#### Datatype Properties
+
+| Property | Domain | Range | Notes |
+|---|---|---|---|
+| `:dateSigned` | `eli:LegalResource` | `xsd:date` | Presidential signature date (Article 25); sub-property of `eli:date_document` |
 
 #### Named Individuals — ELI Resource Types
 
-`Act`, `Bill`, `DraftBill` (Heads of Bill), `ExplanatoryMemo`
+`Act`, `Bill`, `DraftBill` (Heads of Bill), `ExplanatoryMemo`, `PublicBill`, `PrivateBill`, `Errata`, `Gluais`
+
+#### Named Individuals — Amendment List Types
+
+`NumberedAmendmentList`, `UnnumberedAmendmentList` — typed `skos:Concept`; members of `:AmendmentListTypeTable`.
 
 #### Named Individuals — Bill Versions
 
@@ -291,7 +330,9 @@ Contains the SKOS `ConceptScheme` individuals that act as controlled vocabularie
 | `:BillEventResultTable` | Bill event outcome table | `events.owl` |
 | `:BillDeliveryTable` | Bill delivery table | `events.owl` |
 | `:BillDeliveryOutcomeTable` | Bill delivery outcome table | `events.owl` |
-| `:BillStatusTable` | Bill status table | `legislative.owl` |
+| `:BillStatusTable` | Bill status table | `legislation.owl` |
+| `:BillTypeTable` | Bill type table | `legislation.owl` — members: `:PublicBill`, `:PrivateBill` |
+| `:AmendmentListTypeTable` | Amendment list type table | `legislation.owl` — members: `:NumberedAmendmentList`, `:UnnumberedAmendmentList` |
 
 ---
 

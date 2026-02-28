@@ -62,3 +62,23 @@
                           skos:ConceptScheme ;
 
                  skos:prefLabel "Bill status table"@en .
+
+
+###  https://data.oireachtas.ie/ontology#BillTypeTable
+
+:BillTypeTable rdf:type owl:NamedIndividual ,
+                        skos:ConceptScheme ;
+
+               skos:prefLabel "Bill type table"@en ;
+
+               rdfs:comment "Whether a Bill is a Public or Private Bill. Members: :PublicBill, :PrivateBill (defined in legislation.owl)."@en .
+
+
+###  https://data.oireachtas.ie/ontology#AmendmentListTypeTable
+
+:AmendmentListTypeTable rdf:type owl:NamedIndividual ,
+                                 skos:ConceptScheme ;
+
+                        skos:prefLabel "Amendment list type table"@en ;
+
+                        rdfs:comment "The format/type of an amendment list. Members: :NumberedAmendmentList, :UnnumberedAmendmentList (defined in legislation.owl)."@en .
