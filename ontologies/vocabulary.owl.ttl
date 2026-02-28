@@ -82,3 +82,13 @@
                         skos:prefLabel "Amendment list type table"@en ;
 
                         rdfs:comment "The format/type of an amendment list. Members: :NumberedAmendmentList, :UnnumberedAmendmentList (defined in legislation.owl)."@en .
+
+
+###  https://data.oireachtas.ie/ontology#CommitteeTypeTable
+
+:CommitteeTypeTable rdf:type owl:NamedIndividual ,
+                             skos:ConceptScheme ;
+
+                    skos:prefLabel "Committee type table"@en ;
+
+                    rdfs:comment "The type of parliamentary committee. Members: :SelectCommitteeType, :JointCommitteeType, :SpecialCommitteeType (defined in agents.owl). Used via :hasCommitteeType on members:Committee instances."@en .

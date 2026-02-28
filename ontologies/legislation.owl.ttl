@@ -49,25 +49,30 @@
 
 <http://data.europa.eu/eli/ontology#basis_for> rdfs:comment "A Bill is the basis for an Act" .
 
+eli-dl:process_number
+    rdfs:comment "For Oireachtas bills: carries the bill number (e.g. \"60\") as a string. The compound identifier {year}/{number} is expressed via eli:id_local on the DraftLegislationWork."@en .
+
+<http://data.europa.eu/eli/ontology#id_local>
+    rdfs:comment "For Oireachtas bills: the full compound identifier, e.g. \"2025/60\" for the bill or \"2025/18\" for the resulting act (eli:LegalResource). The year component alone is expressed via :legislativeYear; the number component alone via eli-dl:process_number."@en .
+
+eli-dl:process_status
+    rdfs:comment "For Oireachtas bills: set on the eli-dl:LegislativeProcess instance. The stages[].stageOutcome string \"Enacted\" maps here as :EnactedBill, not as a :BillEventOutcome. The final stage completion is separately recorded via eli-dl:activity_completed true on the final eli-dl:LegislativeActivity."@en .
+
+<http://data.europa.eu/eli/ontology#type_document>
+    rdfs:comment "For Oireachtas bills: apply at Work level (eli-dl:DraftLegislationWork or eli:LegalResource) only. Bill-stage version expressions (eli:LegalExpression) do not carry eli:type_document — their document type is inferred from the Work. Exception: the enacted act is a separate eli:LegalResource (typed eli:type_document :Act) linked to the DraftLegislationWork via eli:basis_for. The JSON field versions[].docType = \"act\" signals this transition to the Act LegalResource."@en .
+
+eli-dl:process_type
+    rdfs:comment "For Oireachtas bills: set to :PublicBill or :PrivateBill on the eli-dl:LegislativeProcess instance. Replaces the former :hasBillType property (added in Feb 2026 session, now removed)."@en .
+
+eli-dl:latest_activity
+    rdfs:comment "For Oireachtas bills: points to the most recently completed eli-dl:LegislativeActivity (stage) instance. Maps to the JSON field bill.mostRecentStage. Replaces the former :mostRecentStage property (added in Feb 2026 session, now removed)."@en .
+
 
 #################################################################
 #
 #    Object Properties
 #
 #################################################################
-
-
-###  https://data.oireachtas.ie/ontology#hasBillType
-
-:hasBillType rdf:type owl:ObjectProperty ;
-
-             rdfs:domain eli-dl:DraftLegislationWork ;
-
-             rdfs:range <http://data.europa.eu/eli/ontology#ResourceType> ;
-
-             rdfs:comment "Classifies a Bill as Public or Private."@en ;
-
-             skos:prefLabel "Has bill type"@en .
 
 
 ###  https://data.oireachtas.ie/ontology#hasAmendmentListType
@@ -81,6 +86,19 @@
                       rdfs:comment "The format/type of an amendment list (e.g., numbered or unnumbered)."@en ;
 
                       skos:prefLabel "Has amendment list type"@en .
+
+
+###  https://data.oireachtas.ie/ontology#originHouse
+
+:originHouse rdf:type owl:ObjectProperty ;
+
+             rdfs:domain eli-dl:DraftLegislationWork ;
+
+             rdfs:range :House ;
+
+             rdfs:comment "The house (Dáil Éireann or Seanad Éireann) in which the Bill was first introduced. Distinct from eli-dl:was_submitted_by, which identifies the submitting agent (Government or Private Member)."@en ;
+
+             skos:prefLabel "Origin house"@en .
 
 
 ###  https://data.oireachtas.ie/ontology#statuteBookURI
@@ -111,9 +129,9 @@
 
             rdfs:domain <http://data.europa.eu/eli/ontology#LegalResource> ;
 
-            rdfs:range xsd:date ;
+            rdfs:range xsd:dateTime ;
 
-            rdfs:comment "Date on which the President of Ireland signed the Bill into law under Article 25 of the Constitution."@en ;
+            rdfs:comment "Date and time at which the President of Ireland signed the Bill into law under Article 25 of the Constitution."@en ;
 
             skos:prefLabel "Date signed"@en .
 
@@ -121,6 +139,17 @@
 ###  dct:modified — annotation for Oireachtas bill API records
 
 dct:modified rdfs:comment "For Oireachtas bill records, dct:modified carries the timestamp of the last update to the API record for this bill (ISO 8601 datetime with timezone). Applied to eli-dl:DraftLegislationWork instances."@en .
+
+
+###  https://data.oireachtas.ie/ontology#legislativeYear
+
+:legislativeYear rdf:type owl:DatatypeProperty ;
+
+                 rdfs:range xsd:integer ;
+
+                 rdfs:comment "The calendar year component of the bill or act identifier (from eli:id_local). Applied to eli-dl:DraftLegislationWork (billYear) and eli:LegalResource Act instances (actYear). Note: xsd:gYear is the ideal range but is outside the OWL 2 DL datatype map; xsd:integer is used for HermiT compatibility."@en ;
+
+                 skos:prefLabel "Legislative year"@en .
 
 
 #################################################################
@@ -180,7 +209,7 @@ dct:modified rdfs:comment "For Oireachtas bill records, dct:modified carries the
 
 ###  https://data.oireachtas.ie/ontology#PublicBill
 
-:PublicBill rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+:PublicBill rdf:type eli-dl:ProcessType ,
                      owl:NamedIndividual ;
 
             skos:prefLabel "Public Bill"@en ;
@@ -192,7 +221,7 @@ dct:modified rdfs:comment "For Oireachtas bill records, dct:modified carries the
 
 ###  https://data.oireachtas.ie/ontology#PrivateBill
 
-:PrivateBill rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+:PrivateBill rdf:type eli-dl:ProcessType ,
                       owl:NamedIndividual ;
 
              skos:prefLabel "Private Bill"@en ;
@@ -232,11 +261,12 @@ dct:modified rdfs:comment "For Oireachtas bill records, dct:modified carries the
 
 #################################################################
 #
-#    Individuals — Bill Type (used with :hasBillType, in :BillTypeTable)
+#    Individuals — Bill Type (eli-dl:ProcessType, in :BillTypeTable)
 #
-#    Note: :PublicBill and :PrivateBill are declared above in ELI Resource Types
-#    so they also appear in eli:ResourceTypeTable. They additionally belong
-#    to :BillTypeTable for the hasBillType property scheme.
+#    Note: :PublicBill and :PrivateBill are typed eli-dl:ProcessType (not
+#    eli:ResourceType). They belong to :BillTypeTable (a skos:ConceptScheme)
+#    and are used via eli-dl:process_type on the eli-dl:LegislativeProcess
+#    instance. The former :hasBillType property has been removed.
 #
 #################################################################
 

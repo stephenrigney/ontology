@@ -1,8 +1,22 @@
 # bill.json → Ontology Mapping: Proposals for Unclear/Incomplete Mappings
 
 Proposals for fields where a relevant class or individual already exists but the
-mapping is incomplete or ambiguous. See also `mapping_gaps.md` (if created) for
-fully missing elements addressed in the previous session.
+mapping is incomplete or ambiguous.
+
+---
+
+## Implementation status (Feb 2026)
+
+| # | Topic | Status |
+|---|---|---|
+| 1 | `billNo`/`billYear`/`actNo`/`actYear` — `:legislativeYear` + annotations | **Done** |
+| 2 | `stageOutcome: "Enacted"` — `eli-dl:process_status` annotation | **Done** |
+| 3 | `source`/`sourceURI` — named individuals in `agents.owl.ttl` | **Done** |
+| 4 | `originHouse` — `:originHouse` property | **Done** |
+| 5 | `versions[].docType` — `eli:type_document` annotation | **Done** |
+| 6 | `debates[].chamber.uri` — committee URI pattern + `:CommitteeTypeTable` | **Done** |
+| 7A | Correction: remove `:hasBillType`; retype `:PublicBill`/`:PrivateBill` as `eli-dl:ProcessType` | **Done** |
+| 7B | Correction: remove `:mostRecentStage`; annotate `eli-dl:latest_activity` | **Done** |
 
 ---
 
@@ -38,6 +52,10 @@ datatype property covering both bill and act year:
     and eli:LegalResource Act instances (actYear)."@en ;
     skos:prefLabel "Legislative year"@en .
 ```
+
+> **Implemented with range `xsd:integer`** — `xsd:gYear` is not in the OWL 2
+> DL datatype map and causes HermiT to error; `xsd:integer` is used instead.
+> A comment on the property records this deviation.
 
 **`actNo`:** Reuse `eli-dl:process_number` on the Act `eli:LegalResource`
 instance. Annotate `eli:id_local` to clarify the compound/component split:
@@ -302,9 +320,9 @@ eli-dl:latest_activity
 
 ## Summary of files to change
 
-| File | Change |
-|---|---|
-| `legislation.owl.ttl` | Add `:legislativeYear`; add `:originHouse`; annotate `eli-dl:process_number`, `eli:id_local`, `eli-dl:process_status`, `eli:type_document`, `eli-dl:process_type`, `eli-dl:latest_activity`; remove `:hasBillType`; retype `:PublicBill`/`:PrivateBill` as `eli-dl:ProcessType` |
-| `agents.owl.ttl` | Add `<.../def/bill-source/government>` and `<.../def/bill-source/private-member>` named individuals; add `:hasCommitteeType` property + `:SelectCommitteeType`, `:JointCommitteeType`, `:SpecialCommitteeType` individuals; add `rdfs:comment` URI pattern on `members:Committee` |
-| `events.owl.ttl` | Remove `:mostRecentStage` |
-| `vocabulary.owl.ttl` | Add `:CommitteeTypeTable` concept scheme |
+| File | Change | Status |
+|---|---|---|
+| `legislation.owl.ttl` | Add `:legislativeYear`; add `:originHouse`; annotate `eli-dl:process_number`, `eli:id_local`, `eli-dl:process_status`, `eli:type_document`, `eli-dl:process_type`, `eli-dl:latest_activity`; remove `:hasBillType`; retype `:PublicBill`/`:PrivateBill` as `eli-dl:ProcessType` | **Done** |
+| `agents.owl.ttl` | Add `<.../def/bill-source/government>` and `<.../def/bill-source/private-member>` named individuals; add `:hasCommitteeType` property + `:SelectCommitteeType`, `:JointCommitteeType`, `:SpecialCommitteeType` individuals; add `rdfs:comment` URI pattern on `members:Committee` | **Done** |
+| `events.owl.ttl` | Remove `:mostRecentStage` | **Done** |
+| `vocabulary.owl.ttl` | Add `:CommitteeTypeTable` concept scheme | **Done** |
