@@ -52,8 +52,26 @@
 
 
 #################################################################
+##    Datatype Properties
 #
-#    Annotations and restrictions on imported properties
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#isPrimarySponsor
+
+:isPrimarySponsor rdf:type owl:DatatypeProperty ;
+
+                  rdfs:domain eli-dl:Participation ;
+
+                  rdfs:range xsd:boolean ;
+
+                  rdfs:comment "True if this participation represents the primary sponsor of a Bill (the minister or member in whose name the Bill was presented). False or absent for secondary/co-sponsors."@en ;
+
+                  skos:prefLabel "Is primary sponsor"@en .
+
+
+#################################################################
+##    Annotations and restrictions on imported properties
 #
 #################################################################
 

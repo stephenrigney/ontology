@@ -52,6 +52,79 @@
 
 #################################################################
 #
+#    Object Properties
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#hasBillType
+
+:hasBillType rdf:type owl:ObjectProperty ;
+
+             rdfs:domain eli-dl:DraftLegislationWork ;
+
+             rdfs:range <http://data.europa.eu/eli/ontology#ResourceType> ;
+
+             rdfs:comment "Classifies a Bill as Public or Private."@en ;
+
+             skos:prefLabel "Has bill type"@en .
+
+
+###  https://data.oireachtas.ie/ontology#hasAmendmentListType
+
+:hasAmendmentListType rdf:type owl:ObjectProperty ;
+
+                      rdfs:domain eli-dl:AmendmentToDraftLegislationWork ;
+
+                      rdfs:range skos:Concept ;
+
+                      rdfs:comment "The format/type of an amendment list (e.g., numbered or unnumbered)."@en ;
+
+                      skos:prefLabel "Has amendment list type"@en .
+
+
+###  https://data.oireachtas.ie/ontology#statuteBookURI
+
+:statuteBookURI rdf:type owl:ObjectProperty ;
+
+                rdfs:subPropertyOf dct:relation ;
+
+                rdfs:domain <http://data.europa.eu/eli/ontology#LegalResource> ;
+
+                rdfs:comment "Cross-reference to the corresponding entry in the Irish Statute Book (www.irishstatutebook.ie) using its ELI URI."@en ;
+
+                skos:prefLabel "Irish Statute Book URI"@en .
+
+
+#################################################################
+#
+#    Datatype Properties
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#dateSigned
+
+:dateSigned rdf:type owl:DatatypeProperty ;
+
+            rdfs:subPropertyOf <http://data.europa.eu/eli/ontology#date_document> ;
+
+            rdfs:domain <http://data.europa.eu/eli/ontology#LegalResource> ;
+
+            rdfs:range xsd:date ;
+
+            rdfs:comment "Date on which the President of Ireland signed the Bill into law under Article 25 of the Constitution."@en ;
+
+            skos:prefLabel "Date signed"@en .
+
+
+###  dct:modified — annotation for Oireachtas bill API records
+
+dct:modified rdfs:comment "For Oireachtas bill records, dct:modified carries the timestamp of the last update to the API record for this bill (ISO 8601 datetime with timezone). Applied to eli-dl:DraftLegislationWork instances."@en .
+
+
+#################################################################
+#
 #    Individuals — ELI Resource Types
 #
 #################################################################
@@ -103,6 +176,100 @@
                  skos:topConceptOf <http://data.europa.eu/eli/ontology#ResourceTypeTable> ;
 
                  skos:inScheme <http://data.europa.eu/eli/ontology#ResourceTypeTable> .
+
+
+###  https://data.oireachtas.ie/ontology#PublicBill
+
+:PublicBill rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+                     owl:NamedIndividual ;
+
+            skos:prefLabel "Public Bill"@en ;
+
+            skos:inScheme :BillTypeTable ;
+
+            skos:topConceptOf :BillTypeTable .
+
+
+###  https://data.oireachtas.ie/ontology#PrivateBill
+
+:PrivateBill rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+                      owl:NamedIndividual ;
+
+             skos:prefLabel "Private Bill"@en ;
+
+             skos:inScheme :BillTypeTable ;
+
+             skos:topConceptOf :BillTypeTable .
+
+
+###  https://data.oireachtas.ie/ontology#Errata
+
+:Errata rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+                 owl:NamedIndividual ;
+
+        skos:prefLabel "Errata"@en ;
+
+        rdfs:comment "An erratum slip noting corrections to a Bill after printing."@en ;
+
+        skos:inScheme <http://data.europa.eu/eli/ontology#ResourceTypeTable> ;
+
+        skos:topConceptOf <http://data.europa.eu/eli/ontology#ResourceTypeTable> .
+
+
+###  https://data.oireachtas.ie/ontology#Gluais
+
+:Gluais rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+                 owl:NamedIndividual ;
+
+        skos:prefLabel "Glossary/Gluais"@en ;
+
+        rdfs:comment "A bilingual (EN/GA) glossary published alongside a Bill."@en ;
+
+        skos:inScheme <http://data.europa.eu/eli/ontology#ResourceTypeTable> ;
+
+        skos:topConceptOf <http://data.europa.eu/eli/ontology#ResourceTypeTable> .
+
+
+#################################################################
+#
+#    Individuals — Bill Type (used with :hasBillType, in :BillTypeTable)
+#
+#    Note: :PublicBill and :PrivateBill are declared above in ELI Resource Types
+#    so they also appear in eli:ResourceTypeTable. They additionally belong
+#    to :BillTypeTable for the hasBillType property scheme.
+#
+#################################################################
+
+
+#################################################################
+#
+#    Individuals — Amendment List Types (used with :hasAmendmentListType)
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#NumberedAmendmentList
+
+:NumberedAmendmentList rdf:type owl:NamedIndividual ,
+                                skos:Concept ;
+
+                       skos:prefLabel "Numbered list"@en ;
+
+                       skos:inScheme :AmendmentListTypeTable ;
+
+                       skos:topConceptOf :AmendmentListTypeTable .
+
+
+###  https://data.oireachtas.ie/ontology#UnnumberedAmendmentList
+
+:UnnumberedAmendmentList rdf:type owl:NamedIndividual ,
+                                  skos:Concept ;
+
+                         skos:prefLabel "Unnumbered list"@en ;
+
+                         skos:inScheme :AmendmentListTypeTable ;
+
+                         skos:topConceptOf :AmendmentListTypeTable .
 
 
 #################################################################
