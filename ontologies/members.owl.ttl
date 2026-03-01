@@ -217,10 +217,6 @@ eli-dl:ParliamentaryTerm a owl:Class .
     rdfs:comment "The role of Deputy Chair (Vice-Chair) of a committee. Used via :hasCommitteeRole on :CommitteeMembership records."@en ;
     skos:prefLabel "Deputy Chair"@en .
 
-:Independent a owl:Class ;
-    rdfs:subClassOf :PartyGrouping ;
-    owl:disjointWith :Party .
-
 :MinisterRole a owl:Class ;
     rdfs:subClassOf :CabinetMember ;
     skos:prefLabel "Minister"@en ;
@@ -305,6 +301,12 @@ agents:Minister rdfs:subClassOf
 :hasPartiesMembership a owl:ObjectProperty ;
     rdfs:domain :Party ;
     rdfs:range :PartiesMembership .
+
+:activeDuringTerm a owl:ObjectProperty ;
+    rdfs:domain :PartyGrouping ;
+    rdfs:range agents:HouseTerm ;
+    skos:prefLabel "active during term"@en ;
+    rdfs:comment "Links a :PartyGrouping to the :HouseTerm (agents:DailTerm or agents:SeanadTerm) during which it was active. Corresponds to the 'house' object paired with each party entry in the Oireachtas parties API response (house.uri)."@en .
 
 :isCommitteeMembershipOf a owl:ObjectProperty ;
     rdfs:domain :CommitteeMembership ;
@@ -404,8 +406,9 @@ org:Membership rdfs:subClassOf [ a owl:Restriction ;
 
 :PartyGrouping a owl:Class ;
     rdfs:subClassOf foaf:Group ;
-    owl:equivalentClass [ a owl:Class ;
-            owl:unionOf ( :Independent :Party ) ] .
+    skos:prefLabel "Party grouping"@en ;
+    skos:scopeNote "Use skos:prefLabel for the display name of a party grouping (corresponds to the 'showAs' field in the Oireachtas parties API, e.g. 'Fine Gael', 'Fianna Fáil')."@en ;
+    rdfs:comment "A political party or collective Independent grouping as used in the Oireachtas API. Superclass of :Party. The :Independent named individual (see Individuals section) represents the collective Independent grouping returned by the API."@en .
 
 :Dail a owl:Class ;
     rdfs:subClassOf :House ,
@@ -479,3 +482,12 @@ org:Membership rdfs:subClassOf [ a owl:Restriction ;
         owl:NamedIndividual ;
     skos:prefLabel "Rapporteur"@en ;
     rdfs:comment "The role of a Member appointed as rapporteur for a Bill or committee report. Used via eli-dl:participation_role on eli-dl:Participation instances. See also eli-dl:had_responsible_person for the shorthand property."@en .
+
+
+### Individuals — Party groupings
+
+:Independent a :PartyGrouping,
+        owl:NamedIndividual ;
+    skos:prefLabel "Independent"@en ;
+    :partyCode "Independent"^^xsd:string ;
+    rdfs:comment "Named individual representing the collective Independent grouping as returned by the Oireachtas parties API (partyCode: 'Independent'). Individual independent members hold :PartyMembership records linking them to this individual via :isPartyMembershipOf. Replaces the former :Independent class."@en .
