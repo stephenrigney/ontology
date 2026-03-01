@@ -64,6 +64,19 @@
                   skos:prefLabel "Has committee type"@en .
 
 
+###  https://data.oireachtas.ie/ontology#hasCommitteePurpose
+
+:hasCommitteePurpose rdf:type owl:ObjectProperty ;
+
+                     rdfs:domain <https://data.oireachtas.ie/ontology/members#Committee> ;
+
+                     rdfs:range skos:Concept ;
+
+                     rdfs:comment "The functional purpose/category of a committee as used in the Oireachtas API (e.g. Policy, Shadow Department). Range drawn from the :CommitteePurposeTable concept scheme defined in vocabulary.owl. Distinct from :hasCommitteeType (Select/Joint/Special)."@en ;
+
+                     skos:prefLabel "Has committee purpose"@en .
+
+
 #################################################################
 ##    Datatype Properties
 #
@@ -81,6 +94,84 @@
                   rdfs:comment "True if this participation represents the primary sponsor of a Bill (the minister or member in whose name the Bill was presented). False or absent for secondary/co-sponsors."@en ;
 
                   skos:prefLabel "Is primary sponsor"@en .
+
+
+###  https://data.oireachtas.ie/ontology#memberCode
+
+:memberCode rdf:type owl:DatatypeProperty ;
+
+            rdfs:domain :Member ;
+
+            rdfs:range xsd:string ;
+
+            rdfs:comment "The unique member code as used in the Oireachtas API (e.g. 'Timmy-Dooley.S.2002-09-12'). Typically derivable from the member IRI but stored explicitly for data alignment."@en ;
+
+            skos:prefLabel "Member code"@en .
+
+
+###  https://data.oireachtas.ie/ontology#pId
+
+:pId rdf:type owl:DatatypeProperty ;
+
+     rdfs:domain :Member ;
+
+     rdfs:range xsd:string ;
+
+     rdfs:comment "Short parliamentary identifier slug used internally in the Oireachtas system (e.g. 'TimDooley'). Distinct from :memberCode."@en ;
+
+     skos:prefLabel "Parliamentary identifier"@en .
+
+
+###  https://data.oireachtas.ie/ontology#gender
+
+:gender rdf:type owl:DatatypeProperty ;
+
+        rdfs:domain :Member ;
+
+        rdfs:range xsd:string ;
+
+        rdfs:comment "Gender of the member as reported by the Oireachtas API. Plain string literal; no controlled vocabulary enforced."@en ;
+
+        skos:prefLabel "Gender"@en .
+
+
+###  https://data.oireachtas.ie/ontology#dateOfDeath
+
+:dateOfDeath rdf:type owl:DatatypeProperty ;
+
+             rdfs:domain :Member ;
+
+             rdfs:range xsd:dateTime ;
+
+             rdfs:comment "Date of death of the member, where known. Uses xsd:dateTime for OWL 2 DL compatibility (xsd:date is not in the OWL 2 datatype map)."@en ;
+
+             skos:prefLabel "Date of death"@en .
+
+
+###  https://data.oireachtas.ie/ontology#wikiTitle
+
+:wikiTitle rdf:type owl:DatatypeProperty ;
+
+           rdfs:domain :Member ;
+
+           rdfs:range xsd:string ;
+
+           rdfs:comment "The Wikipedia article title for this member (e.g. 'Timmy Dooley'), as returned by the Oireachtas API. Can be used to construct a Wikipedia or DBpedia URI."@en ;
+
+           skos:prefLabel "Wikipedia title"@en .
+
+
+###  https://data.oireachtas.ie/ontology#hasImage
+
+:hasImage rdf:type owl:DatatypeProperty ;
+
+          rdfs:domain :Member ;
+
+          rdfs:range xsd:boolean ;
+
+          rdfs:comment "True if the Oireachtas API has an image available for this member; false otherwise. This is a presence flag, not a link to the image resource."@en ;
+
+          skos:prefLabel "Has image"@en .
 
 
 #################################################################
@@ -109,7 +200,7 @@
 ###  members:Committee — URI pattern for individual committee instances
 
 <https://data.oireachtas.ie/ontology/members#Committee>
-    rdfs:comment "Individual committee instances use the URI pattern <https://data.oireachtas.ie/ie/oireachtas/committee/{slug}/{term-no}>, e.g. <https://data.oireachtas.ie/ie/oireachtas/committee/select_committee_on_finance/34>. The {slug} matches the segment used in debates[].uri in the bill API response, enabling the IRI to be derived directly from existing data. Committee type is expressed via :hasCommitteeType with members from :CommitteeTypeTable."@en .
+    rdfs:comment "Individual committee instances use the URI pattern <https://data.oireachtas.ie/ie/oireachtas/committee/{slug}/{term-no}>, e.g. <https://data.oireachtas.ie/ie/oireachtas/committee/select_committee_on_finance/34>. The {slug} matches the segment used in debates[].uri in the bill API response, enabling the IRI to be derived directly from existing data. Committee structural type (Select/Joint/Special) is expressed via :hasCommitteeType with members from :CommitteeTypeTable. Functional purpose (Policy/Shadow Department) is expressed via :hasCommitteePurpose with members from :CommitteePurposeTable."@en .
 
 
 #################################################################
@@ -344,3 +435,32 @@ eli-dl:Participation rdf:type owl:Class .
                       skos:inScheme :CommitteeTypeTable ;
 
                       skos:topConceptOf :CommitteeTypeTable .
+
+
+#################################################################
+#
+#    Individuals — Committee purpose types (members of :CommitteePurposeTable)
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#PolicyPurpose
+
+:PolicyPurpose rdf:type owl:NamedIndividual , skos:Concept ;
+
+               skos:prefLabel "Policy"@en ;
+
+               skos:inScheme :CommitteePurposeTable ;
+
+               skos:topConceptOf :CommitteePurposeTable .
+
+
+###  https://data.oireachtas.ie/ontology#ShadowDepartmentPurpose
+
+:ShadowDepartmentPurpose rdf:type owl:NamedIndividual , skos:Concept ;
+
+                         skos:prefLabel "Shadow Department"@en ;
+
+                         skos:inScheme :CommitteePurposeTable ;
+
+                         skos:topConceptOf :CommitteePurposeTable .
