@@ -26,15 +26,27 @@ oireachtas.owl
 │   └── (imports: ELI, ELI-DL, W3C org)
 ├── events.owl
 │   └── (imports: agents.owl, ELI-DL, W3C time)
-├── legislative.owl
+├── legislation.owl
 │   └── (imports: events.owl, ELI, ELI-DL)
 ├── members.owl
 │   └── (imports: agents.owl, ELI-DL, W3C org, FOAF)
 ├── vocabulary.owl
-│   └── (imports: events.owl, legislative.owl)
+│   └── (imports: events.owl, legislation.owl)
 └── debates.owl
     └── (imports: events.owl, agents.owl)
 ```
+
+---
+
+### Naming Conventions
+
+| Kind | Convention | Examples |
+|---|---|---|
+| Classes | UpperCamelCase | `:HouseTerm`, `:BillEvent`, `:DailMembership` |
+| Object properties | lowerCamelCase | `:inHouse`, `:hasTerm`, `:isPartyMembershipOf` |
+| Datatype properties | lowerCamelCase | `:memberCode`, `:progressStage`, `:legislativeYear` |
+| Named individuals — concept-scheme members | UpperCamelCase | `:FirstStage`, `:EnactedBill`, `:PublicBill` |
+| Named individuals — singleton instances | lowerCamelCase path segment (IRI) or UpperCamelCase local name | `<.../house/dail>`, `:MoverRole`, `:Independent` |
 
 ---
 
@@ -249,12 +261,12 @@ Defines the procedural events that occur during a Bill's lifecycle, including st
 
 #### Object Properties
 
-| Property | Domain | Range |
-|---|---|---|
-| `:InChamber` | `:BillEvent` | `agents:House` |
-| `:commenced` | `time:TemporalEntity` | `:EventDate` |
-| `:elected` | `time:TemporalEntity` | `:EventDate` |
-| `:ended` | `time:TemporalEntity` | `:EventDate` |
+| Property | Domain | Range | Notes |
+|---|---|---|---|
+| `:inHouse` | `:BillEvent` | `agents:House` | Renamed from `:InChamber` (2026) to follow lowerCamelCase convention. All stage concept individuals (`:FirstStage`, `:CommitteeStage`, etc.) are explicitly typed both `:BillStage` and `:BillEvent`, so the domain is satisfied without spurious inference. Instance data for stage occurrences should follow the same dual-typing pattern. |
+| `:commenced` | `time:TemporalEntity` | `:EventDate` | |
+| `:elected` | `time:TemporalEntity` | `:EventDate` | |
+| `:ended` | `time:TemporalEntity` | `:EventDate` | |
 
 #### Datatype Properties
 

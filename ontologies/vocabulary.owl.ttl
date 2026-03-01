@@ -12,7 +12,7 @@
     rdfs:comment "Controlled vocabularies (SKOS concept schemes) for the Houses of the Oireachtas ontology."@en ;
 
     owl:imports <https://data.oireachtas.ie/ontology/events> ,
-                <https://data.oireachtas.ie/ontology/legislative> .
+                <https://data.oireachtas.ie/ontology/legislation> .
 
 
 #################################################################

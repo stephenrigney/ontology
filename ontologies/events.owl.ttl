@@ -50,15 +50,17 @@ time:ProperInterval rdf:type owl:Class ;
 #################################################################
 
 
-###  https://data.oireachtas.ie/ontology#InChamber
+###  https://data.oireachtas.ie/ontology#inHouse
 
-:InChamber rdf:type owl:ObjectProperty ;
+:inHouse rdf:type owl:ObjectProperty ;
 
-           rdfs:comment "The House (Dáil, Seanad or committee) in which a Bill event occurs"@en ;
+         rdfs:comment "The House (Dáil, Seanad or committee) in which a Bill event occurs. Renamed from :InChamber (2026) to follow lowerCamelCase property naming convention. Domain is :BillEvent; all stage concept individuals (:FirstStage, :CommitteeStage, etc.) are explicitly typed both :BillStage and :BillEvent, satisfying the domain without spurious inference. Instance data for stage occurrences (e.g. a specific Committee Stage activity for a given bill) should consequently be typed both :BillStage and :BillEvent."@en ;
 
-           rdfs:domain :BillEvent ;
+         rdfs:domain :BillEvent ;
 
-           rdfs:range :House .
+         rdfs:range :House ;
+
+         skos:prefLabel "in house"@en .
 
 
 ###  https://data.oireachtas.ie/ontology#commenced
