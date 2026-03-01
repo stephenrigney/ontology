@@ -181,12 +181,41 @@ eli-dl:ParliamentaryTerm a owl:Class .
     rdfs:domain :Whip ;
     rdfs:range :PartyGrouping .
 
+:partyCode a owl:DatatypeProperty ;
+    rdfs:domain :PartyGrouping ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "Party code"@en ;
+    rdfs:comment "Short code identifying the party as used in the Oireachtas API (e.g. 'Fianna_F\u00e1il')."@en .
+
+:representCode a owl:DatatypeProperty ;
+    rdfs:domain :Constituencies ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "Represent code"@en ;
+    rdfs:comment "Short code identifying the constituency or panel as used in the Oireachtas API (e.g. 'Clare', 'Administrative-Panel')."@en .
+
+:committeeCode a owl:DatatypeProperty ;
+    rdfs:domain :Committee ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "Committee code"@en ;
+    rdfs:comment "Short alphanumeric code identifying the committee as used in the Oireachtas API (e.g. 'CAJ', 'CC2')."@en .
+
+:committeeID a owl:DatatypeProperty ;
+    rdfs:domain :Committee ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "Committee ID"@en ;
+    rdfs:comment "Numeric identifier for the committee as used in the Oireachtas API."@en .
+
 :CabinetMembership a owl:Class ;
     rdfs:subClassOf :MembersMembership ;
     rdfs:comment "A record of an agents:Member holding a :CabinetMember role (:TaoiseachRole, :TanaisteRole or :MinisterRole) in the formal constitutional Government (agents:Government). Linked to the specific role via :hasCabinetRole. The person's membership of agents:Government is inferred from the existence of this record."@en .
 
 :Chair a owl:Class ;
     rdfs:subClassOf org:Role .
+
+:DeputyChair a owl:Class ;
+    rdfs:subClassOf org:Role ;
+    rdfs:comment "The role of Deputy Chair (Vice-Chair) of a committee. Used via :hasCommitteeRole on :CommitteeMembership records."@en ;
+    skos:prefLabel "Deputy Chair"@en .
 
 :Independent a owl:Class ;
     rdfs:subClassOf :PartyGrouping ;
@@ -282,6 +311,12 @@ agents:Minister rdfs:subClassOf
     rdfs:range :Committee ;
     rdfs:subPropertyOf owl:topObjectProperty .
 
+:hasCommitteeRole a owl:ObjectProperty ;
+    rdfs:domain :CommitteeMembership ;
+    rdfs:range org:Role ;
+    skos:prefLabel "has committee role"@en ;
+    rdfs:comment "The role held by the member within the committee (e.g. :Chair, :DeputyChair). Absent when the member holds no special role."@en .
+
 :isPartyIn a owl:FunctionalProperty,
         owl:ObjectProperty ;
     rdfs:domain :PartiesMembership ;
@@ -321,6 +356,11 @@ org:Membership rdfs:subClassOf [ a owl:Restriction ;
     rdfs:domain :MinisterOfStateMembership ;
     rdfs:range :MinisterOfStateRole ;
     rdfs:comment "Links a :MinisterOfStateMembership record to the specific :MinisterOfStateRole held. Analogous to :hasCabinetRole for :CabinetMembership."@en .
+
+:officeNameUri a owl:ObjectProperty ;
+    rdfs:domain :MinisterOfStateMembership ;
+    skos:prefLabel "Office name URI"@en ;
+    rdfs:comment "Links a :MinisterOfStateMembership record to the dereferenceable IRI of the named ministerial office, when provided by the API (office.officeName.uri). The IRI carries the authoritative description of the office; no named office individuals are defined in this ontology (see Future Work in README)."@en .
 
 :GovernmentExecutive a owl:Class ;
     rdfs:subClassOf

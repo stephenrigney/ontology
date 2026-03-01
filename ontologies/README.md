@@ -55,6 +55,8 @@ Defines the organisations, roles and persons involved in the legislative process
 > **Government three-tier refactoring (2026):** `:Government` gains `skos:altLabel "Cabinet"@en` and an updated `rdfs:comment` explaining the constitutional basis and three-tier structure. See `members.owl` for the new `:GovernmentBenches`, `:GovernmentExecutive` and `:MinisterOfState` classes.
 >
 > **bill.json alignment (2026):** Named individuals `<.../def/bill-source/government>` (typed `:Government`) and `<.../def/bill-source/private-member>` (typed `:PrivateMember`) added using the API `def/` URIs directly as IRIs, so `eli-dl:was_submitted_by` can point straight at the dereferenceable URI from the JSON. `:hasCommitteeType` object property added (domain `members:Committee`, range `skos:Concept`). Committee type individuals `:SelectCommitteeType`, `:JointCommitteeType`, `:SpecialCommitteeType` added as `eli-dl:ProcessType` + `skos:Concept` members of `:CommitteeTypeTable`. URI pattern convention for committee instances annotated on `members:Committee`.
+>
+> **member.json alignment (2026):** Six person-level datatype properties added on `:Member`: `:memberCode`, `:pId`, `:gender` (plain `xsd:string`), `:dateOfDeath` (`xsd:dateTime`), `:wikiTitle`, `:hasImage` (`xsd:boolean`). `:hasCommitteePurpose` object property added (domain `members:Committee`, range `skos:Concept`, range from `:CommitteePurposeTable`). Purpose concept individuals `:PolicyPurpose` and `:ShadowDepartmentPurpose` added as `skos:Concept` members of `:CommitteePurposeTable`. `members:Committee` annotation updated to reference both `:hasCommitteeType` and `:hasCommitteePurpose`.
 
 #### Classes
 
@@ -84,13 +86,20 @@ Defines the organisations, roles and persons involved in the legislative process
 |---|---|---|---|
 | `:hasTerm` | `:House` | `:HouseTerm` | `owl:inverseOf :termOf` |
 | `:termOf` | `:HouseTerm` | `:House` | |
-| `:hasCommitteeType` | `members:Committee` | `skos:Concept` | Committee type drawn from `:CommitteeTypeTable`; members `:SelectCommitteeType`, `:JointCommitteeType`, `:SpecialCommitteeType` |
+| `:hasCommitteeType` | `members:Committee` | `skos:Concept` | Committee structural type drawn from `:CommitteeTypeTable`; members `:SelectCommitteeType`, `:JointCommitteeType`, `:SpecialCommitteeType` |
+| `:hasCommitteePurpose` | `members:Committee` | `skos:Concept` | Committee functional purpose drawn from `:CommitteePurposeTable`; members `:PolicyPurpose`, `:ShadowDepartmentPurpose` |
 
 #### Datatype Properties
 
 | Property | Domain | Range | Notes |
 |---|---|---|---|
 | `:isPrimarySponsor` | `eli-dl:Participation` | `xsd:boolean` | `true` for the primary bill sponsor; false/absent for secondary sponsors |
+| `:memberCode` | `:Member` | `xsd:string` | Unique member code from the API (e.g. `'Timmy-Dooley.S.2002-09-12'`); typically derivable from the member IRI |
+| `:pId` | `:Member` | `xsd:string` | Short parliamentary identifier slug used internally in the Oireachtas system (e.g. `'TimDooley'`) |
+| `:gender` | `:Member` | `xsd:string` | Gender as reported by the API; plain string literal |
+| `:dateOfDeath` | `:Member` | `xsd:dateTime` | Date of death where known; `xsd:dateTime` used for OWL 2 DL compatibility |
+| `:wikiTitle` | `:Member` | `xsd:string` | Wikipedia article title; can be used to construct a Wikipedia or DBpedia URI |
+| `:hasImage` | `:Member` | `xsd:boolean` | `true` if the API has an image available; presence flag only, not a URI |
 
 #### Annotations on imported properties
 
@@ -99,7 +108,7 @@ Defines the organisations, roles and persons involved in the legislative process
 | `eli:passed_by` | Range restricted to `:Oireachtas` |
 | `eli-dl:was_submitted_by` | Documents that range includes `:Government`, `:PrivateMember`, `:PrivateSponsor`; replaces `:BillSource` |
 | `eli-dl:had_participation` | Documents use with `:MoverRole` / `:RapporteurRole` on `:JournalEvent` activities; replaces `:Mover` |
-| `members:Committee` | URI pattern for instances: `<https://data.oireachtas.ie/ie/oireachtas/committee/{slug}/{term-no}>`; `{slug}` matches the segment in `debates[].uri` in the bill API |
+| `members:Committee` | URI pattern for instances: `<https://data.oireachtas.ie/ie/oireachtas/committee/{slug}/{term-no}>`; `{slug}` matches the segment in `debates[].uri` in the bill API. Structural type via `:hasCommitteeType`; functional purpose via `:hasCommitteePurpose` |
 
 #### Named Individuals
 
@@ -112,6 +121,8 @@ Defines the organisations, roles and persons involved in the legislative process
 | `:SelectCommitteeType` | `skos:Concept` | Select Committee — member of `:CommitteeTypeTable` |
 | `:JointCommitteeType` | `skos:Concept` | Joint Committee — member of `:CommitteeTypeTable` |
 | `:SpecialCommitteeType` | `skos:Concept` | Special Committee — member of `:CommitteeTypeTable` |
+| `:PolicyPurpose` | `skos:Concept` | Policy — member of `:CommitteePurposeTable` |
+| `:ShadowDepartmentPurpose` | `skos:Concept` | Shadow Department — member of `:CommitteePurposeTable` |
 
 ---
 
@@ -132,6 +143,8 @@ Defines the detailed membership, role and party structures of the Houses of the 
 > **Role class rename (2026):** All four `members` role classes renamed for unambiguous person/role distinction: `members:Minister` → `members:MinisterRole`, `members:Taoiseach` → `members:TaoiseachRole`, `members:Tanaiste` → `members:TanaisteRole`, `members:MinisterOfState` → `members:MinisterOfStateRole`. `org:holds` / `org:heldBy` bridge axioms added in `members.owl` connecting `agents:Minister` (person) ↔ `members:MinisterRole` (role). `rdfs:comment` added to `agents:Minister` cross-referencing the bridge.
 >
 > **bill.json alignment (2026):** `:isPrimarySponsor` datatype property (`xsd:boolean`) added on `eli-dl:Participation` to capture the `sponsors[].sponsor.isPrimary` flag. Set `true` on the primary sponsor's participation instance.
+>
+> **member.json alignment (2026):** `:DeputyChair` class added (`org:Role` subclass, companion to `:Chair`). `:hasCommitteeRole` object property added on `:CommitteeMembership` (range `org:Role`) to record the role a member holds within a committee. `:partyCode`, `:representCode`, `:committeeCode` (all `xsd:string`) and `:committeeID` (`xsd:integer`) datatype properties added for API short-code identifiers on `:PartyGrouping`, `:Constituencies` and `:Committee` respectively. `:officeNameUri` object property added on `:MinisterOfStateMembership` to link to the dereferenceable office IRI when provided by the API.
 
 #### Classes (selected)
 
@@ -160,6 +173,8 @@ Defines the detailed membership, role and party structures of the Houses of the 
 | `:MinisterOfStateMembership` | `:MembersMembership` | Record of an `agents:Member` holding a `:MinisterOfStateRole`. Linked to role via `:hasMinisterOfStateRole`. |
 | `:CommitteeMembership` | `:MembersMembership` | Membership of a committee |
 | `:DateRange` | `:Temporal` | Temporal extent for org:Membership subclasses; start/end typed `xsd:dateTime` (note: `xsd:date` is not in the OWL 2 DL datatype map) |
+| `:Chair` | `org:Role` | Role of Chair of a committee. Used via `:hasCommitteeRole` on `:CommitteeMembership` records. |
+| `:DeputyChair` | `org:Role` | Role of Deputy Chair (Vice-Chair) of a committee. Used via `:hasCommitteeRole` on `:CommitteeMembership` records. |
 
 #### Object Properties (selected)
 
@@ -174,6 +189,17 @@ Defines the detailed membership, role and party structures of the Houses of the 
 | `:isDeputyHeadOfExecutive` | `:TanaisteRole` | `:GovernmentExecutive` | Sub-property of `:isDeputyHeadOf`; asserts deputy headship of the GovernmentExecutive |
 | `:isDeputyHeadOfBenches` | `:TanaisteRole` | `:GovernmentBenches` | Sub-property of `:isDeputyHeadOf`; asserts deputy headship of the GovernmentBenches |
 | `:hasMinisterOfStateRole` | `:MinisterOfStateMembership` | `:MinisterOfStateRole` | Links a membership record to the specific MinisterOfStateRole held |
+| `:hasCommitteeRole` | `:CommitteeMembership` | `org:Role` | The role held by the member within the committee (`:Chair`, `:DeputyChair`); absent when no special role |
+| `:officeNameUri` | `:MinisterOfStateMembership` | (IRI) | Links to the dereferenceable IRI of the named ministerial office when provided by the API (`office.officeName.uri`) |
+
+#### Datatype Properties
+
+| Property | Domain | Range | Notes |
+|---|---|---|---|
+| `:partyCode` | `:PartyGrouping` | `xsd:string` | Short party code from the API (e.g. `'Fianna_Fáil'`) |
+| `:representCode` | `:Constituencies` | `xsd:string` | Short constituency/panel code from the API (e.g. `'Clare'`, `'Administrative-Panel'`) |
+| `:committeeCode` | `:Committee` | `xsd:string` | Short alphanumeric committee code from the API (e.g. `'CAJ'`, `'CC2'`) |
+| `:committeeID` | `:Committee` | `xsd:integer` | Numeric committee identifier from the API |
 
 #### Named Individuals — ELI-DL Participation Roles
 
@@ -190,6 +216,11 @@ Defines the detailed membership, role and party structures of the Houses of the 
 |---|---|
 | ~~RDA usage — `:PrivateSponsor`~~ | **Resolved (2026).** `rda:C10004` and `rda:C10005` replaced with `foaf:Agent` on `agents:PrivateSponsor`. The RDA namespace (`http://rdaregistry.info/Elements/c/`) is no longer referenced anywhere in the ontology. `rda:` row removed from Referenced External Schemas. |
 | Named individual IRI path | Decide whether continuous-house individual IRIs use the short form `<https://data.oireachtas.ie/house/dail>` (current) or the API-path form `<https://data.oireachtas.ie/ie/oireachtas/house/dail>`. Relevant only when the data conversion layer is built. |
+| Committee operational lifespan | Add `:hasCommitteeDateRange` property on `:Committee` to record the committee's own operational date range (`committee.committeeDateRange`), distinct from the member's `memberDateRange` already covered by `:hasMembershipDateRange`. |
+| Committee lifecycle status | Add `CommitteeStatusTable` concept scheme with members `Active` / `Archived` / etc. to map `committee.status` and `committee.mainStatus` fields. |
+| Committee expiry type | Add `CommitteeExpiryTable` concept scheme with members `Sessional` / `Special` etc. to map `committee.expiryType`. |
+| Committee time-bounded names | `committee.committeeName` is an array of names each with a validity `dateRange`. Modelling this requires a reification pattern — e.g. a `:CommitteeName` class with `:nameEn`, `:nameGa` and `:hasMembershipDateRange`. Architecturally non-trivial; deferred. |
+| Named ministerial office individuals | `office.officeName.uri` currently mapped via bare IRI link (`:officeNameUri`). A future extension could define typed named individuals for each ministerial office (portfolio + department), enabling richer querying. |
 
 ---
 
@@ -357,6 +388,7 @@ Contains the SKOS `ConceptScheme` individuals that act as controlled vocabularie
 | `:BillTypeTable` | Bill type table | `legislation.owl` — members: `:PublicBill` (ProcessType), `:PrivateBill` (ProcessType); used via `eli-dl:process_type` |
 | `:AmendmentListTypeTable` | Amendment list type table | `legislation.owl` — members: `:NumberedAmendmentList`, `:UnnumberedAmendmentList` |
 | `:CommitteeTypeTable` | Committee type table | `agents.owl` — members: `:SelectCommitteeType`, `:JointCommitteeType`, `:SpecialCommitteeType`; used via `:hasCommitteeType` on `members:Committee` instances |
+| `:CommitteePurposeTable` | Committee purpose table | `agents.owl` — members: `:PolicyPurpose`, `:ShadowDepartmentPurpose`; used via `:hasCommitteePurpose` on `members:Committee` instances |
 
 ---
 
@@ -388,3 +420,82 @@ Imports `events.owl` and `agents.owl` as anticipated dependencies.
 | `skos:` | `http://www.w3.org/2004/02/skos/core#` | Simple Knowledge Organisation System |
 | `foaf:` | `http://xmlns.com/foaf/0.1/` | FOAF (Friend of a Friend) — persons, agents, organisations |
 | `dct:` | `http://purl.org/dc/terms/` | Dublin Core Terms |
+
+---
+
+### JSON-to-Ontology Mapping
+
+Field-level mappings between Oireachtas API JSON responses and ontology terms are recorded in CSV files. Each row maps one JSON field to its ontology term, with notes on IRI patterns, range types and caveats.
+
+#### Columns
+
+| Column | Description |
+|---|---|
+| `json_path` | Full dot-notation path to the field, using `[]` to denote array elements |
+| `json_field` | Leaf field name |
+| `ontology_term` | Prefixed ontology term (`eli:`, `eli-dl:`, `:`, `agents:`, `members:`, `foaf:`, `skos:`, etc.) |
+| `term_type` | `Class`, `ObjectProperty`, `DatatypeProperty`, `AnnotationProperty`, or `Individual` |
+| `source_file` | The `.ttl` sub-ontology file in which the term is defined |
+| `mapping_status` | See status values below |
+| `notes` | Mapping rationale, range types, IRI patterns and caveats |
+
+#### Mapping status values
+
+| Status | Meaning |
+|---|---|
+| `mapped` | Pre-existing ontology term; no changes required |
+| `new` | Term added during the alignment work |
+| `implicit` | No explicit property needed — the information is derivable from the individual's IRI or class typing |
+| `future_work` | No ontology term yet; deferred |
+
+---
+
+#### bills/bill_json_mapping.csv
+
+[bills/bill_json_mapping.csv](../bills/bill_json_mapping.csv) records the field-level mapping between the Oireachtas Legislation API JSON response (`data/bill.json`) and the ontology.
+
+**Coverage summary (March 2026)**
+
+| Status | Count |
+|---|---|
+| `mapped` | 49 |
+| `new` | 18 |
+| `implicit` | 26 |
+| `future_work` | 14 |
+| **Total** | **107** |
+
+Key `new` terms added during `bill.json` alignment:
+
+| JSON field | Ontology term | Notes |
+|---|---|---|
+| `billNo` / `actNo` | `eli-dl:process_number` | Bill or act number component of `eli:id_local` (e.g. `"60"`) |
+| `billYear` / `actYear` | `:legislativeYear` | Year component; `xsd:integer` (ideal type `xsd:gYear` is outside the OWL 2 DL datatype map) |
+| `billTypeURI` | `eli-dl:process_type` | Set to `:PublicBill` or `:PrivateBill` (`eli-dl:ProcessType`) |
+| `sourceURI` | `eli-dl:was_submitted_by` | Points to `<.../def/bill-source/government>` or `<.../def/bill-source/private-member>` |
+| `originHouseURI` | `:originHouse` | House where the Bill was first introduced |
+| `lastUpdated` | `dct:modified` | API record update timestamp (`xsd:dateTime`) |
+| `mostRecentStage` | `eli-dl:latest_activity` | Replaces removed `:mostRecentStage` |
+| `act.dateSigned` | `:dateSigned` | Presidential signature date (`xsd:dateTime`) |
+| `act.statutebookURI` | `:statuteBookURI` | Cross-reference to the Irish Statute Book ELI URI; sub-property of `dct:relation` |
+| `amendmentList.stageNo` | `:stageNo` | Per-house amendment list stage number (`xsd:positiveInteger`) |
+| `event.progressStage` | `:progressStage` | Cross-house sequential stage number (1 = First Stage Dáil … 10 = Enacted) |
+| `relatedDoc.docType` / `version.docType` | `eli:type_document` | Resource type drawn from ELI resource type individuals (`:Bill`, `:Act`, etc.) |
+| `sponsor.isPrimary` | `:isPrimarySponsor` | Boolean primary sponsor flag on `eli-dl:Participation` |
+
+`future_work` items (14): API envelope fields (`head.counts.*`, `billSort.*`, `contextDate`), `debates[].uri` and `debates[].debateSectionId` (require `debates.owl` development), and `sponsors[].sponsor.as.uri` (ministerial role IRI pattern not yet defined).
+
+---
+
+#### data/member_mapping.csv
+
+[data/member_mapping.csv](../data/member_mapping.csv) records the field-level mapping between the Oireachtas Members API JSON response (`data/member.json`) and the ontology.
+
+**Coverage summary (March 2026)**
+
+| Status | Count |
+|---|---|
+| `mapped` | 42 |
+| `new` | 15 |
+| `implicit` | 6 |
+| `future_work` | 11 |
+| **Total** | **74** |

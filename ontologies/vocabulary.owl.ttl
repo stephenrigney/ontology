@@ -92,3 +92,13 @@
                     skos:prefLabel "Committee type table"@en ;
 
                     rdfs:comment "The type of parliamentary committee. Members: :SelectCommitteeType, :JointCommitteeType, :SpecialCommitteeType (defined in agents.owl). Used via :hasCommitteeType on members:Committee instances."@en .
+
+
+###  https://data.oireachtas.ie/ontology#CommitteePurposeTable
+
+:CommitteePurposeTable rdf:type owl:NamedIndividual ,
+                                skos:ConceptScheme ;
+
+                       skos:prefLabel "Committee purpose table"@en ;
+
+                       rdfs:comment "The functional purpose/category of a committee as used in the Oireachtas API. Distinct from CommitteeTypeTable (Select/Joint/Special). Members: :PolicyPurpose, :ShadowDepartmentPurpose (defined in agents.owl). Used via :hasCommitteePurpose on members:Committee instances."@en .
