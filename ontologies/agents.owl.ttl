@@ -174,6 +174,32 @@
           skos:prefLabel "Has image"@en .
 
 
+###  https://data.oireachtas.ie/ontology#termNo
+
+:termNo rdf:type owl:DatatypeProperty ;
+
+        rdfs:domain :HouseTerm ;
+
+        rdfs:range xsd:integer ;
+
+        rdfs:comment "The ordinal number of a parliamentary term as used in the Oireachtas API (e.g. 31 for the 31st Dáil). Corresponds to the 'houseNo' field in the API response."@en ;
+
+        skos:prefLabel "Term number"@en .
+
+
+###  https://data.oireachtas.ie/ontology#houseCode
+
+:houseCode rdf:type owl:DatatypeProperty ;
+
+           rdfs:domain :HouseTerm ;
+
+           rdfs:range xsd:string ;
+
+           rdfs:comment "Short code identifying the house as used in the Oireachtas API (e.g. 'dail', 'seanad'). Corresponds to the 'houseCode' field in the API response."@en ;
+
+           skos:prefLabel "House code"@en .
+
+
 #################################################################
 ##    Annotations and restrictions on imported properties
 #
@@ -261,7 +287,9 @@ eli-dl:Participation rdf:type owl:Class .
 
            rdfs:subClassOf :Oireachtas ;
 
-           rdfs:comment "A bounded parliamentary term — the sitting of the Dáil or Seanad between its commencement and dissolution. Subclasses :DailTerm and :SeanadTerm type each term by house. ELI-DL alignment: instances should additionally be typed as eli-dl:ParliamentaryTerm so they can be referenced via eli-dl:parliamentary_term on activities and works. The class itself is not made a subclass of eli-dl:ParliamentaryTerm because that class is a skos:Concept/crm:E55_Type, incompatible with the org:FormalOrganization superclass."@en .
+           rdfs:comment "A bounded parliamentary term — the sitting of the Dáil or Seanad between its commencement and dissolution. Subclasses :DailTerm and :SeanadTerm type each term by house. ELI-DL alignment: instances should additionally be typed as eli-dl:ParliamentaryTerm so they can be referenced via eli-dl:parliamentary_term on activities and works. The class itself is not made a subclass of eli-dl:ParliamentaryTerm because that class is a skos:Concept/crm:E55_Type, incompatible with the org:FormalOrganization superclass."@en ;
+
+           skos:scopeNote "Use skos:prefLabel for the display name of a house term (corresponds to the 'showAs' field in the Oireachtas API, e.g. '31st Dáil'). Use :termNo for the ordinal integer and :houseCode for the house slug."@en .
 
 
 ###  https://data.oireachtas.ie/ontology#DailTerm
