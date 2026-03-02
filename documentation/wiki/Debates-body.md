@@ -45,7 +45,7 @@ A `debateSection` refers to a [division or vote](#division) if its `name` attrib
 
 
 |Akoma Ntoso|Describes|
-|----------|-------|-------------|
+|----------|-------|
 |debate|The debate on a specific date in a named house or committee|
 |debateBody/debateSection|A debate on a specific topic|
 |debateSection/@eId|Internally unique identifier, begins with `dbsect_`|
@@ -61,7 +61,7 @@ Due to the way the XML was originally generated, sometimes debate sections conta
 The `Heading` element contains the text for the name of the debate. It is usually but not always present.  
 
 |Akoma Ntoso|Describes|
-|----------|-------|-------------|
+|----------|-------|
 |debateSection/heading|The heading for the debate|
 |heading/recordedTime/@time|Inline element containing xsd:dateTime accurate within ten minutes|
 
@@ -114,7 +114,7 @@ A `summary` may also contain a description of events that were not directly attr
 
 
 |Akoma Ntoso|Describes|
-|----------|-------|-------------|
+|----------|-------|
 |debateSection/summary|Summaries of procedural or other incidents|
 |summary@eId|Internally unique, starts with "sum_"|
 |summary/@title|Used where summary refers to a vote outcome or TLCEvent, the type of action described (to do: summary vocab)|
@@ -129,15 +129,13 @@ A `summary` may also contain a description of events that were not directly attr
 An oral contribution from a Member, a witness to a committee or, on occasion, a visiting Head of State is recorded in a `speech` element.
 
 |Akoma Ntoso|Describes|
-|----------|-------|-------------|
+|----------|-------|
 |debateSection/speech|A contribution by a Member or a witness|
 |speech/@eId|Internally unique, begins with "spk_"|
 |speech/@by|Reference to TLCPerson eId for speaker|
 |speech/@as|Optional - refers to TLCRole eId for speaker role, eg, Taoiseach|
 |speech/from|The handle for a speaker as published|
-|  |  |
 |from/recordedTime|Inline element containing xsd:dateTime|
-|  |  |
 |speech/p|A paragraph in a speech, containing text of the speech|
 
 **Issues**
@@ -155,7 +153,7 @@ A parliamentary question is submitted in advance of a debate and published in a 
 See [Parliamentary Questions](ordering-business#parliamentary-questions) for further information.
 
 |Akoma Ntoso|Describes|
-|----------|-------|-------------|
+|----------|-------|
 |debateSection/question | A parliamentary question |
 |question/@eId | The reference number of a question, same as published in Questions list|
 |question/@by | Reference to TLCPerson/@eId of the Member asking the question |
@@ -166,7 +164,7 @@ See [Parliamentary Questions](ordering-business#parliamentary-questions) for fur
 ### Paragraph
 
 |Akoma Ntoso|Describes|
-|----------|-------|-------------|
+|----------|-------|
 |p/@eId|Internally unique identifier, starts with `para_`|
 |p/@class|Style markup - either center or indent_{n}|
 |p/i, p/b, p/u| italicise, bold and underline, respectively|
@@ -202,7 +200,7 @@ For example:
 
 
 |Akoma Ntoso|Describes|
-|----------|-------|-------------|
+|----------|-------|
 |entity/@refersTo|Internal reference to TLCEvent/@eId|
 |entity/@name|Type of entity, either "reference" or "amendment"|
 
@@ -211,7 +209,7 @@ For example:
 A table may be the child of `debateSection`, `speech`, `rollCall` or `answer`.
 
 |Akoma Ntoso|Describes|
-|----------|-------|-------------|
+|----------|-------|
 |table/tr| Corresponds to html `tr`|
 |table/caption| Table title text|
 |tr/td| Corresponds to html `td` |
@@ -277,4 +275,4 @@ As can be seen in the final entity reference, it was not always possible to iden
 
 In older debates, voting Members have not been linked to TLCPerson. In such cases, `person\@refersTo` has a value of "#".
 
-### Roll Call
+
