@@ -35,7 +35,9 @@ eli-dl:ParliamentaryTerm a owl:Class .
 
 :DailConstituency a owl:Class ;
     rdfs:subClassOf :Constituencies,
-        <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> .
+        <http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing> ;
+    owl:disjointWith :SeanadPanel ;
+    rdfs:comment "A geographically bounded Dáil constituency. Instances correspond to 'constituency' records in the Oireachtas API (representType = 'constituency'). URI pattern: <https://data.oireachtas.ie/ie/oireachtas/house/dail/{houseNo}/constituency/{representCode}>. The API 'showAs' display name maps to skos:prefLabel. Disjoint with :SeanadPanel."@en .
 
 :DailSelectCommitteeMembership a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -90,7 +92,9 @@ eli-dl:ParliamentaryTerm a owl:Class .
         :PartiesMembership .
 
 :SeanadPanel a owl:Class ;
-    rdfs:subClassOf :Constituencies .
+    rdfs:subClassOf :Constituencies ;
+    owl:disjointWith :DailConstituency ;
+    rdfs:comment "A Seanad vocational or appointment panel (no geographic extent). Instances correspond to 'panel' records in the Oireachtas API (representType = 'panel'). URI pattern: <https://data.oireachtas.ie/ie/oireachtas/house/seanad/{houseNo}/panel/{representCode}>. The API 'showAs' display name maps to skos:prefLabel. Disjoint with :DailConstituency."@en .
 
 :SeanadSelectCommitteeMembership a owl:Class ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -327,7 +331,8 @@ agents:Minister rdfs:subClassOf
 :CommitteeMembership a owl:Class ;
     rdfs:subClassOf :MembersMembership .
 
-:Constituencies a owl:Class .
+:Constituencies a owl:Class ;
+    rdfs:comment "A Dáil constituency or Seanad panel. The API scopes each instance to a specific :HouseTerm via :constituencyInHouseTerm. The API 'showAs' display name maps to skos:prefLabel or rdfs:label. Subclasses: :DailConstituency (geographically bounded) and :SeanadPanel (vocational/appointment panel). :representCode holds the short code used in IRIs and in the API (constituencyOrPanel.representCode). URI path segment type ('constituency' vs 'panel') is derivable from the subclass typing."@en .
 
 :Senator a owl:Class ;
     rdfs:subClassOf :OireachtasMember .
@@ -447,6 +452,13 @@ org:Membership rdfs:subClassOf [ a owl:Restriction ;
     rdfs:range agents:HouseTerm ;
     skos:prefLabel "in house term"@en ;
     rdfs:comment "The specific parliamentary term of this membership record. The individual in the range is the same resource that eli-dl:parliamentary_term references on associated eli-dl:LegislativeActivity instances."@en .
+
+:constituencyInHouseTerm a owl:ObjectProperty ;
+    rdfs:subPropertyOf :inHouseTerm ;
+    rdfs:domain :Constituencies ;
+    rdfs:range agents:HouseTerm ;
+    skos:prefLabel "constituency in house term"@en ;
+    rdfs:comment "Links a :Constituencies instance (:DailConstituency or :SeanadPanel) to the specific parliamentary term (:HouseTerm) for which it exists. Reflects the term-scoped URI structure of the Oireachtas API (constituencyOrPanel.uri embeds the houseNo). Sub-property of :inHouseTerm."@en .
 
 :hasMembersMembership a owl:ObjectProperty ;
     rdfs:domain agents:Member ;

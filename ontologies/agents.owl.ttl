@@ -10,6 +10,7 @@
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
 @base <https://data.oireachtas.ie/ontology/agents> .
 
 <https://data.oireachtas.ie/ontology/agents> rdf:type owl:Ontology ;
@@ -195,9 +196,22 @@
 
            rdfs:range xsd:string ;
 
-           rdfs:comment "Short code identifying the house as used in the Oireachtas API (e.g. 'dail', 'seanad'). Corresponds to the 'houseCode' field in the API response."@en ;
+           rdfs:comment "Short code identifying the house as used in the Oireachtas API (e.g. 'dail', 'seanad'). Corresponds to the 'houseCode' field in the API response. Note: the API also returns 'chamberCode' and 'houseType' fields with identical values — these are duplicates of 'houseCode' and should be ignored during conversion."@en ;
 
            skos:prefLabel "House code"@en .
+
+
+###  https://data.oireachtas.ie/ontology#seats
+
+:seats rdf:type owl:DatatypeProperty ;
+
+       rdfs:domain :HouseTerm ;
+
+       rdfs:range xsd:integer ;
+
+       rdfs:comment "The number of seats in this parliamentary term. Seat count may vary between terms (e.g. the 33rd Dáil had 160 seats; the 34th Dáil has 174). Belongs on :HouseTerm rather than :House because it is term-specific. Corresponds to the 'seats' field in the Oireachtas houses API."@en ;
+
+       skos:prefLabel "Seats"@en .
 
 
 #################################################################
@@ -221,6 +235,12 @@
 
 <http://data.europa.eu/eli/eli-draft-legislation-ontology#had_participation>
     rdfs:comment "Use eli-dl:had_participation on eli-dl:LegislativeActivity instances (including :JournalEvent subclasses) to record agent participation. Set eli-dl:participation_role to :MoverRole or :RapporteurRole (defined in members.owl) to distinguish the role. This replaces the former :Mover class."@en .
+
+
+###  dct:temporal — use to link a HouseTerm to its sitting date range
+
+dct:temporal
+    rdfs:comment "Use dct:temporal on :HouseTerm instances to link to a dct:PeriodOfTime blank node or named individual representing the term's operational date range. On the dct:PeriodOfTime node use dcat:startDate (xsd:dateTime) for the commencement date and dcat:endDate (xsd:dateTime) for the dissolution date. dcat:endDate is absent when the term is the current sitting term (corresponds to a null 'dateRange.end' in the Oireachtas API). Corresponds to the 'dateRange.start' / 'dateRange.end' fields in the Oireachtas houses API."@en .
 
 
 ###  members:Committee — URI pattern for individual committee instances
@@ -249,6 +269,39 @@ eli-dl:ParliamentaryTerm rdf:type owl:Class .
 ###  http://data.europa.eu/eli/eli-draft-legislation-ontology#Participation
 
 eli-dl:Participation rdf:type owl:Class .
+
+
+###  http://purl.org/dc/terms/PeriodOfTime
+
+dct:PeriodOfTime rdf:type owl:Class ;
+
+                 rdfs:comment "A temporal interval or instant, used here to represent the operational date range of a :HouseTerm. Linked from a :HouseTerm instance via dct:temporal. Start and end dates are expressed using dcat:startDate and dcat:endDate."@en .
+
+
+###  http://www.w3.org/ns/dcat#startDate
+
+dcat:startDate rdf:type owl:DatatypeProperty ;
+
+               rdfs:domain dct:PeriodOfTime ;
+
+               rdfs:range xsd:dateTime ;
+
+               rdfs:comment "The start (commencement) date of a dct:PeriodOfTime. Used on HouseTerm date-range nodes to record the date from which the term sat. Typed xsd:dateTime for OWL 2 DL compatibility (xsd:date is not in the OWL 2 DL datatype map). Corresponds to the 'dateRange.start' field in the Oireachtas houses API."@en ;
+
+               skos:prefLabel "Start date"@en .
+
+
+###  http://www.w3.org/ns/dcat#endDate
+
+dcat:endDate rdf:type owl:DatatypeProperty ;
+
+             rdfs:domain dct:PeriodOfTime ;
+
+             rdfs:range xsd:dateTime ;
+
+             rdfs:comment "The end (dissolution) date of a dct:PeriodOfTime. Used on HouseTerm date-range nodes to record when the term ended. Absent when the term is the current sitting term (corresponds to a null 'dateRange.end' in the Oireachtas API). Typed xsd:dateTime for OWL 2 DL compatibility."@en ;
+
+             skos:prefLabel "End date"@en .
 
 
 #################################################################
@@ -289,7 +342,7 @@ eli-dl:Participation rdf:type owl:Class .
 
            rdfs:comment "A bounded parliamentary term — the sitting of the Dáil or Seanad between its commencement and dissolution. Subclasses :DailTerm and :SeanadTerm type each term by house. ELI-DL alignment: instances should additionally be typed as eli-dl:ParliamentaryTerm so they can be referenced via eli-dl:parliamentary_term on activities and works. The class itself is not made a subclass of eli-dl:ParliamentaryTerm because that class is a skos:Concept/crm:E55_Type, incompatible with the org:FormalOrganization superclass."@en ;
 
-           skos:scopeNote "Use skos:prefLabel for the display name of a house term (corresponds to the 'showAs' field in the Oireachtas API, e.g. '31st Dáil'). Use :termNo for the ordinal integer and :houseCode for the house slug."@en .
+           skos:scopeNote "Use skos:prefLabel for the display name of a house term (corresponds to the 'showAs' field in the Oireachtas API, e.g. '31st Dáil'). Use :termNo for the ordinal integer, :houseCode for the house slug (e.g. 'dail'), :seats for the seat count, and dct:temporal (pointing to a dct:PeriodOfTime node) for the term's sitting date range (dcat:startDate / dcat:endDate)."@en .
 
 
 ###  https://data.oireachtas.ie/ontology#DailTerm

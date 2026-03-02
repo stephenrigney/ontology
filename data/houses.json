@@ -1,0 +1,66 @@
+[
+    {
+        "house": {
+            "showAs": "27th Seanad",
+            "chamberType": "house",
+            "houseNo": "27",
+            "dateRange": {
+                "start": "2025-01-29",
+                "end": null
+            },
+            "seats": 60,
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/seanad/27",
+            "chamberCode": "seanad",
+            "houseCode": "seanad",
+            "houseType": "seanad"
+        }
+    },
+    {
+        "house": {
+            "showAs": "34th Dáil",
+            "chamberType": "house",
+            "houseNo": "34",
+            "dateRange": {
+                "start": "2024-11-29",
+                "end": null
+            },
+            "seats": 174,
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/34",
+            "chamberCode": "dail",
+            "houseCode": "dail",
+            "houseType": "dail"
+        }
+    },
+    {
+        "house": {
+            "showAs": "26th Seanad",
+            "chamberType": "house",
+            "houseNo": "26",
+            "dateRange": {
+                "start": "2020-03-30",
+                "end": "2025-01-29"
+            },
+            "seats": 60,
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/seanad/26",
+            "chamberCode": "seanad",
+            "houseCode": "seanad",
+            "houseType": "seanad"
+        }
+    },
+    {
+        "house": {
+            "showAs": "33rd Dáil",
+            "chamberType": "house",
+            "houseNo": "33",
+            "dateRange": {
+                "start": "2020-02-08",
+                "end": "2024-11-08"
+            },
+            "seats": 160,
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/33",
+            "chamberCode": "dail",
+            "houseCode": "dail",
+            "houseType": "dail"
+        }
+    }
+]
