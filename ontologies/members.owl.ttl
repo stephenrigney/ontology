@@ -370,7 +370,7 @@ org:Membership rdfs:subClassOf [ a owl:Restriction ;
     rdfs:comment "Links a :MinisterOfStateMembership record to the dereferenceable IRI of the named ministerial office, when provided by the API (office.officeName.uri). The IRI carries the authoritative description of the office; no named office individuals are defined in this ontology (see Future Work in README)."@en .
 
 :GovernmentExecutive a owl:Class ;
-    rdfs:subClassOf
+    rdfs:subClassOf agents:Oireachtas ,
         [ a owl:Restriction ;
             owl:onProperty :hasMembers ;
             owl:allValuesFrom [ a owl:Class ;

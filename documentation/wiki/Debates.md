@@ -34,14 +34,13 @@ In the following tables, element paths are denoted as `parent/child`. For brevit
 
 ### FRBR metadata
 
-Akoma Ntoso uses the FRBR ontology to describe document life cycles. For debates XML, the FRBR lifecycle comprises `FRBRWork`, `FRBRExpression` and `FRBRManifestation`. These map to the Oireachtas ontology as follows:
+Akoma Ntoso uses the FRBR ontology to describe document life cycles. For debates XML, the FRBR lifecycle comprises `FRBRWork`, `FRBRExpression` and `FRBRManifestation`. 
 
-
-| Akoma Ntoso| Oireachtas ontology| Describes|
-|----------|---------|--------|
-| FRBRWork | RDA:Work | A debate as a distinct (collective) intellectual creation |
-| FRBRExpression | RDA:Expression | Representation of a debate as text, video or audio |
-| FRBRManifestation | RDA:Manifestation | The physical embodiment of a debate in electronic or other form|
+| Akoma Ntoso| Describes|
+|----------|---------|
+| FRBRWork | A debate as a distinct (collective) intellectual creation |
+| FRBRExpression | Representation of a debate as text, video or audio |
+| FRBRManifestation | The physical embodiment of a debate in electronic or other form|
 
 
 FRBR attributes in debates XML are as follows:
