@@ -1,0 +1,20 @@
+## Bill Classes
+
+| Class                   | sub-class of /based on                               |                                                                                                        |
+|-------------------------|------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| oir:BillResource        | eli:LegalResource, metalex:BibliographicWork         | The Bill (or amendment) as a distinct intellectual creation/ as a concept                              |
+| oir:BillExpression      | eli:LegalExpression, metalex:BibliographicExpression |                                                                                                        |
+| oir:BillFormat          | eli:Format, metalex:BibliographicManifestation       |                                                                                                        |
+| oir:BillVersion         | eli:Version                                          | Version of Bill (see concept scheme                                                                    |
+| oir:BillDelivery        | metalex:LegislativeDelivery                          | The action/event by which Bill first came before the Houses for consideration (see concept scheme)     |
+| oir:BillDeliveryOutcome |                                                      | Outcome of oir:BillDelivery (see concept scheme)                                                       |
+| oir:BillSource          | equiv./sub-class of oir:Role                         | Source of Bill (see concept scheme)                                                                    |
+| oir:BillEvent           | metalex:LegislativeCreation                          | An event that affects the status of a Bill (see concept scheme)                                        |
+| oir:BillStage           | oir:BillEvent                                        | The stage of a Bill (See concept schema)                                                               |
+| oir:BillStatus          |                                                      | The current status of a Bill (see concept schema)                                                      |
+| oir:AmendingStage       | metalex:LegislativeModification                      | A stage (ie, committee or report) which can have as its outcome a new version (expression) of the Bill |
+| oir:Mover               | metalex:Legislator, oir:Member, oir:Role             | A member who moves a motion, proposes a question or moves an amendment                                 |
+| metalex:Result          |                                                      | The outcome of a Bill event                                                                            |
+| oir:BillAmendment           | eli:LegalResource, oir:BillEvent, oir:amendingStage  | An amendment as simultaneously a document and a modifying event                                        |
+| oir:AmendmentList       |                                                      | Numbered or unnumbered list of amendments, either proposed or made (see concept scheme)                |
+| oir:BillAmendmentText  | eli:LegalExpression | The text of the amendment |
