@@ -1,0 +1,515 @@
+@prefix : <https://data.oireachtas.ie/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix eli-dl: <http://data.europa.eu/eli/eli-draft-legislation-ontology#> .
+@base <https://data.oireachtas.ie/ontology/legislation> .
+
+<https://data.oireachtas.ie/ontology/legislation> rdf:type owl:Ontology ;
+
+    rdfs:comment "Legislative Documents ontology for the Houses of the Oireachtas: Bills, Acts, versions, expressions and formats."@en ;
+
+    owl:imports <https://data.oireachtas.ie/ontology/events> ,
+                <http://data.europa.eu/eli/ontology#> ,
+                <http://data.europa.eu/eli/eli-draft-legislation-ontology#> .
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  Eliminated local classes — use ELI-DL/ELI equivalents directly:
+###    :BillResource     → eli-dl:DraftLegislationWork
+###    :BillExpression   → eli:LegalExpression
+###    :BillFormat       → eli:Format
+###    :BillVersion      → eli-dl:LegislativeProcessWorkVersion
+###    :BillsBook        → skos:OrderedCollection
+###    :AmendmentList    → eli-dl:AmendmentToDraftLegislationWork
+###    :BillAmendment    → eli-dl:AmendmentToDraftLegislationWork (document)
+###                        + eli-dl:LegislativeActivity (event, typed via eli-dl:had_activity_type)
+###    :BillStatus       → eli-dl:ProcessStatus
+
+
+#################################################################
+#
+#    Annotations on imported ELI properties
+#
+#################################################################
+
+<http://data.europa.eu/eli/ontology#title_alternative> rdfs:label "Long title of a Bill"@en .
+
+<http://data.europa.eu/eli/ontology#title> rdfs:label "Short title of a Bill" .
+
+<http://data.europa.eu/eli/ontology#basis_for> rdfs:comment "A Bill is the basis for an Act" .
+
+eli-dl:process_number
+    rdfs:comment "For Oireachtas bills: carries the bill number (e.g. \"60\") as a string. The compound identifier {year}/{number} is expressed via eli:id_local on the DraftLegislationWork."@en .
+
+<http://data.europa.eu/eli/ontology#id_local>
+    rdfs:comment "For Oireachtas bills: the full compound identifier, e.g. \"2025/60\" for the bill or \"2025/18\" for the resulting act (eli:LegalResource). The year component alone is expressed via :legislativeYear; the number component alone via eli-dl:process_number."@en .
+
+eli-dl:process_status
+    rdfs:comment "For Oireachtas bills: set on the eli-dl:LegislativeProcess instance. The stages[].stageOutcome string \"Enacted\" maps here as :EnactedBill, not as a :BillEventOutcome. The final stage completion is separately recorded via eli-dl:activity_completed true on the final eli-dl:LegislativeActivity."@en .
+
+<http://data.europa.eu/eli/ontology#type_document>
+    rdfs:comment "For Oireachtas bills: apply at Work level (eli-dl:DraftLegislationWork or eli:LegalResource) only. Bill-stage version expressions (eli:LegalExpression) do not carry eli:type_document — their document type is inferred from the Work. Exception: the enacted act is a separate eli:LegalResource (typed eli:type_document :Act) linked to the DraftLegislationWork via eli:basis_for. The JSON field versions[].docType = \"act\" signals this transition to the Act LegalResource."@en .
+
+eli-dl:process_type
+    rdfs:comment "For Oireachtas bills: set to :PublicBill or :PrivateBill on the eli-dl:LegislativeProcess instance. Replaces the former :hasBillType property (added in Feb 2026 session, now removed)."@en .
+
+eli-dl:latest_activity
+    rdfs:comment "For Oireachtas bills: points to the most recently completed eli-dl:LegislativeActivity (stage) instance. Maps to the JSON field bill.mostRecentStage. Replaces the former :mostRecentStage property (added in Feb 2026 session, now removed)."@en .
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#hasAmendmentListType
+
+:hasAmendmentListType rdf:type owl:ObjectProperty ;
+
+                      rdfs:domain eli-dl:AmendmentToDraftLegislationWork ;
+
+                      rdfs:range skos:Concept ;
+
+                      rdfs:comment "The format/type of an amendment list (e.g., numbered or unnumbered)."@en ;
+
+                      skos:prefLabel "Has amendment list type"@en .
+
+
+###  https://data.oireachtas.ie/ontology#originHouse
+
+:originHouse rdf:type owl:ObjectProperty ;
+
+             rdfs:domain eli-dl:DraftLegislationWork ;
+
+             rdfs:range :House ;
+
+             rdfs:comment "The house (Dáil Éireann or Seanad Éireann) in which the Bill was first introduced. Distinct from eli-dl:was_submitted_by, which identifies the submitting agent (Government or Private Member)."@en ;
+
+             skos:prefLabel "Origin house"@en .
+
+
+###  https://data.oireachtas.ie/ontology#statuteBookURI
+
+:statuteBookURI rdf:type owl:ObjectProperty ;
+
+                rdfs:subPropertyOf dct:relation ;
+
+                rdfs:domain <http://data.europa.eu/eli/ontology#LegalResource> ;
+
+                rdfs:comment "Cross-reference to the corresponding entry in the Irish Statute Book (www.irishstatutebook.ie) using its ELI URI."@en ;
+
+                skos:prefLabel "Irish Statute Book URI"@en .
+
+
+#################################################################
+#
+#    Datatype Properties
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#dateSigned
+
+:dateSigned rdf:type owl:DatatypeProperty ;
+
+            rdfs:subPropertyOf <http://data.europa.eu/eli/ontology#date_document> ;
+
+            rdfs:domain <http://data.europa.eu/eli/ontology#LegalResource> ;
+
+            rdfs:range xsd:dateTime ;
+
+            rdfs:comment "Date and time at which the President of Ireland signed the Bill into law under Article 25 of the Constitution."@en ;
+
+            skos:prefLabel "Date signed"@en .
+
+
+###  dct:modified — annotation for Oireachtas bill API records
+
+dct:modified rdfs:comment "For Oireachtas bill records, dct:modified carries the timestamp of the last update to the API record for this bill (ISO 8601 datetime with timezone). Applied to eli-dl:DraftLegislationWork instances."@en .
+
+
+###  https://data.oireachtas.ie/ontology#legislativeYear
+
+:legislativeYear rdf:type owl:DatatypeProperty ;
+
+                 rdfs:range xsd:integer ;
+
+                 rdfs:comment "The calendar year component of the bill or act identifier (from eli:id_local). Applied to eli-dl:DraftLegislationWork (billYear) and eli:LegalResource Act instances (actYear). Note: xsd:gYear is the ideal range but is outside the OWL 2 DL datatype map; xsd:integer is used for HermiT compatibility."@en ;
+
+                 skos:prefLabel "Legislative year"@en .
+
+
+#################################################################
+#
+#    Individuals — ELI Resource Types
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#Act
+
+:Act rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+              owl:NamedIndividual ;
+
+     skos:prefLabel "Act"@en ;
+
+     skos:topConceptOf <http://data.europa.eu/eli/ontology#ResourceTypeTable> ;
+
+     skos:inScheme <http://data.europa.eu/eli/ontology#ResourceTypeTable> .
+
+
+###  https://data.oireachtas.ie/ontology#Bill
+
+:Bill rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+               owl:NamedIndividual ;
+
+      skos:prefLabel "Bill"@en ;
+
+      skos:inScheme <http://data.europa.eu/eli/ontology#ResourceTypeTable> ;
+
+      skos:topConceptOf <http://data.europa.eu/eli/ontology#ResourceTypeTable> .
+
+
+###  https://data.oireachtas.ie/ontology#DraftBill
+
+:DraftBill rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+                    owl:NamedIndividual ;
+
+           skos:prefLabel "Heads of Bill"@en ;
+
+           skos:inScheme <http://data.europa.eu/eli/ontology#ResourceTypeTable> ;
+
+           skos:topConceptOf <http://data.europa.eu/eli/ontology#ResourceTypeTable> .
+
+
+###  https://data.oireachtas.ie/ontology#ExplanatoryMemo
+
+:ExplanatoryMemo rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+                          owl:NamedIndividual ;
+
+                 skos:prefLabel "Explanatory Memorandum"@en ;
+
+                 skos:topConceptOf <http://data.europa.eu/eli/ontology#ResourceTypeTable> ;
+
+                 skos:inScheme <http://data.europa.eu/eli/ontology#ResourceTypeTable> .
+
+
+###  https://data.oireachtas.ie/ontology#PublicBill
+
+:PublicBill rdf:type eli-dl:ProcessType ,
+                     owl:NamedIndividual ;
+
+            skos:prefLabel "Public Bill"@en ;
+
+            skos:inScheme :BillTypeTable ;
+
+            skos:topConceptOf :BillTypeTable .
+
+
+###  https://data.oireachtas.ie/ontology#PrivateBill
+
+:PrivateBill rdf:type eli-dl:ProcessType ,
+                      owl:NamedIndividual ;
+
+             skos:prefLabel "Private Bill"@en ;
+
+             skos:inScheme :BillTypeTable ;
+
+             skos:topConceptOf :BillTypeTable .
+
+
+###  https://data.oireachtas.ie/ontology#Errata
+
+:Errata rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+                 owl:NamedIndividual ;
+
+        skos:prefLabel "Errata"@en ;
+
+        rdfs:comment "An erratum slip noting corrections to a Bill after printing."@en ;
+
+        skos:inScheme <http://data.europa.eu/eli/ontology#ResourceTypeTable> ;
+
+        skos:topConceptOf <http://data.europa.eu/eli/ontology#ResourceTypeTable> .
+
+
+###  https://data.oireachtas.ie/ontology#Gluais
+
+:Gluais rdf:type <http://data.europa.eu/eli/ontology#ResourceType> ,
+                 owl:NamedIndividual ;
+
+        skos:prefLabel "Glossary/Gluais"@en ;
+
+        rdfs:comment "A bilingual (EN/GA) glossary published alongside a Bill."@en ;
+
+        skos:inScheme <http://data.europa.eu/eli/ontology#ResourceTypeTable> ;
+
+        skos:topConceptOf <http://data.europa.eu/eli/ontology#ResourceTypeTable> .
+
+
+#################################################################
+#
+#    Individuals — Bill Type (eli-dl:ProcessType, in :BillTypeTable)
+#
+#    Note: :PublicBill and :PrivateBill are typed eli-dl:ProcessType (not
+#    eli:ResourceType). They belong to :BillTypeTable (a skos:ConceptScheme)
+#    and are used via eli-dl:process_type on the eli-dl:LegislativeProcess
+#    instance. The former :hasBillType property has been removed.
+#
+#################################################################
+
+
+#################################################################
+#
+#    Individuals — Amendment List Types (used with :hasAmendmentListType)
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#NumberedAmendmentList
+
+:NumberedAmendmentList rdf:type owl:NamedIndividual ,
+                                skos:Concept ;
+
+                       skos:prefLabel "Numbered list"@en ;
+
+                       skos:inScheme :AmendmentListTypeTable ;
+
+                       skos:topConceptOf :AmendmentListTypeTable .
+
+
+###  https://data.oireachtas.ie/ontology#UnnumberedAmendmentList
+
+:UnnumberedAmendmentList rdf:type owl:NamedIndividual ,
+                                  skos:Concept ;
+
+                         skos:prefLabel "Unnumbered list"@en ;
+
+                         skos:inScheme :AmendmentListTypeTable ;
+
+                         skos:topConceptOf :AmendmentListTypeTable .
+
+
+#################################################################
+#
+#    Individuals — Bill Versions
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#AsInitiated
+
+:AsInitiated rdf:type eli-dl:LegislativeProcessWorkVersion ,
+                      owl:NamedIndividual ;
+
+             skos:prefLabel "As Initiated"@en ;
+
+             skos:topConceptOf <http://data.europa.eu/eli/ontology#VersionTable> ;
+
+             skos:inScheme <http://data.europa.eu/eli/ontology#VersionTable> .
+
+[ rdf:type owl:Axiom ;
+  skos:prefLabel "Bill as initiated"@en ;
+  owl:annotatedSource :AsInitiated ;
+  owl:annotatedTarget eli-dl:LegislativeProcessWorkVersion ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+###  https://data.oireachtas.ie/ontology#VersionA
+
+:VersionA rdf:type eli-dl:LegislativeProcessWorkVersion ,
+                   owl:NamedIndividual ;
+
+          skos:prefLabel "Second Printing"@en ;
+
+          skos:inScheme <http://data.europa.eu/eli/ontology#VersionTable> ;
+
+          skos:topConceptOf <http://data.europa.eu/eli/ontology#VersionTable> .
+
+[ rdf:type owl:Axiom ;
+  skos:prefLabel "Second printing"@en ;
+  rdfs:comment "The second version of a Bill after being amended for the first time."@en ;
+  owl:annotatedTarget eli-dl:LegislativeProcessWorkVersion ;
+  owl:annotatedSource :VersionA ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+###  https://data.oireachtas.ie/ontology#VersionB
+
+:VersionB rdf:type eli-dl:LegislativeProcessWorkVersion ,
+                   owl:NamedIndividual ;
+
+          skos:prefLabel "Third Printing"@en ;
+
+          skos:topConceptOf <http://data.europa.eu/eli/ontology#VersionTable> ;
+
+          skos:inScheme <http://data.europa.eu/eli/ontology#VersionTable> .
+
+[ rdf:type owl:Axiom ;
+  skos:prefLabel "Third Printing"@en ;
+  rdfs:comment "Third version of Bill, having been amended for the second time."@en ;
+  owl:annotatedTarget eli-dl:LegislativeProcessWorkVersion ;
+  owl:annotatedSource :VersionB ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+###  https://data.oireachtas.ie/ontology#VersionC
+
+:VersionC rdf:type eli-dl:LegislativeProcessWorkVersion ,
+                   owl:NamedIndividual ;
+
+          skos:prefLabel "Fourth Printing"@en ;
+
+          skos:inScheme <http://data.europa.eu/eli/ontology#VersionTable> ;
+
+          skos:topConceptOf <http://data.europa.eu/eli/ontology#VersionTable> .
+
+[ rdf:type owl:Axiom ;
+  rdfs:comment "Fourth Printing"@en ,
+               "Fourth version of Bill, having been amended for the third time."@en ;
+  owl:annotatedTarget eli-dl:LegislativeProcessWorkVersion ;
+  owl:annotatedSource :VersionC ;
+  owl:annotatedProperty rdf:type
+] .
+
+
+###  https://data.oireachtas.ie/ontology#VersionD
+
+:VersionD rdf:type eli-dl:LegislativeProcessWorkVersion ,
+                   owl:NamedIndividual ;
+
+          skos:prefLabel "Fifth Printing"@en ;
+
+          skos:topConceptOf <http://data.europa.eu/eli/ontology#VersionTable> ;
+
+          skos:inScheme <http://data.europa.eu/eli/ontology#VersionTable> .
+
+
+#################################################################
+#
+#    Individuals — Bill Statuses
+#
+#################################################################
+
+
+###  https://data.oireachtas.ie/ontology#AwaitingSignatureBill
+
+:AwaitingSignatureBill rdf:type eli-dl:ProcessStatus ,
+                                owl:NamedIndividual ;
+
+                       skos:prefLabel "Passed, awaiting President's signature"@en ;
+
+                       skos:topConceptOf :BillStatusTable ;
+
+                       skos:inScheme :BillStatusTable .
+
+
+###  https://data.oireachtas.ie/ontology#CurrentBill
+
+:CurrentBill rdf:type eli-dl:ProcessStatus ,
+                      owl:NamedIndividual ;
+
+             skos:prefLabel "Current"@en ;
+
+             skos:inScheme :BillStatusTable ;
+
+             skos:topConceptOf :BillStatusTable .
+
+
+###  https://data.oireachtas.ie/ontology#DefeatedBill
+
+:DefeatedBill rdf:type eli-dl:ProcessStatus ,
+                       owl:NamedIndividual ;
+
+              skos:prefLabel "Defeated"@en ;
+
+              skos:topConceptOf :BillStatusTable ;
+
+              skos:inScheme :BillStatusTable .
+
+
+###  https://data.oireachtas.ie/ontology#DraftHeadsOfBill
+
+:DraftHeadsOfBill rdf:type eli-dl:ProcessStatus ,
+                           owl:NamedIndividual ;
+
+                  skos:prefLabel "Heads drafted"@en ;
+
+                  skos:topConceptOf :BillStatusTable ;
+
+                  skos:inScheme :BillStatusTable .
+
+
+###  https://data.oireachtas.ie/ontology#EnactedBill
+
+:EnactedBill rdf:type eli-dl:ProcessStatus ,
+                      owl:NamedIndividual ;
+
+             skos:prefLabel "Enacted"@en ;
+
+             skos:inScheme :BillStatusTable ;
+
+             skos:topConceptOf :BillStatusTable .
+
+
+###  https://data.oireachtas.ie/ontology#LapsedBill
+
+:LapsedBill rdf:type eli-dl:ProcessStatus ,
+                     owl:NamedIndividual ;
+
+            skos:prefLabel "Lapsed"@en ;
+
+            skos:topConceptOf :BillStatusTable ;
+
+            skos:inScheme :BillStatusTable .
+
+
+###  https://data.oireachtas.ie/ontology#RejectedAtReferendumBill
+
+:RejectedAtReferendumBill rdf:type eli-dl:ProcessStatus ,
+                                   owl:NamedIndividual ;
+
+                          skos:prefLabel "Rejected at referendum"@en ;
+
+                          skos:topConceptOf :BillStatusTable ;
+
+                          skos:inScheme :BillStatusTable .
+
+
+###  https://data.oireachtas.ie/ontology#SubjectToReferendumBill
+
+:SubjectToReferendumBill rdf:type eli-dl:ProcessStatus ,
+                                  owl:NamedIndividual ;
+
+                         skos:prefLabel "Passed, subject to referendum"@en ;
+
+                         skos:topConceptOf :BillStatusTable ;
+
+                         skos:inScheme :BillStatusTable .
+
+
+###  https://data.oireachtas.ie/ontology#WithdrawnBill
+
+:WithdrawnBill rdf:type eli-dl:ProcessStatus ,
+                        owl:NamedIndividual ;
+
+               skos:prefLabel "Withdrawn"@en ;
+
+               skos:topConceptOf :BillStatusTable ;
+
+               skos:inScheme :BillStatusTable .

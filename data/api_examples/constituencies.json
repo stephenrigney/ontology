@@ -1,0 +1,59 @@
+[
+    {
+        "constituencyOrPanel": {
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/9/constituency/Cork-South-East",
+            "showAs": "Cork South East",
+            "representCode": "Cork-South-East",
+            "representType": "constituency"
+        },
+        "house": {
+            "houseNo": "9",
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/9",
+            "houseCode": "dail",
+            "showAs": "9th Dáil"
+        }
+    },
+    {
+        "constituencyOrPanel": {
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/34/constituency/Dublin-Mid-West",
+            "showAs": "Dublin Mid-West",
+            "representCode": "Dublin-Mid-West",
+            "representType": "constituency"
+        },
+        "house": {
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/dail/34",
+            "houseNo": "34",
+            "houseCode": "dail",
+            "showAs": "34th Dáil"
+        }
+    },
+    {
+        "constituencyOrPanel": {
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/seanad/9/panel/Nominated-by-the-Taoiseach",
+            "representType": "panel",
+            "representCode": "Nominated-by-the-Taoiseach",
+            "showAs": "Nominated by the Taoiseach"
+        },
+        "house": {
+            "houseNo": "9",
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/seanad/9",
+            "houseCode": "seanad",
+            "showAs": "9th Seanad"
+        }
+    },
+    {
+        "constituencyOrPanel": {
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/seanad/9/panel/Agricultural-Panel",
+            "representType": "panel",
+            "representCode": "Agricultural-Panel",
+            "showAs": "Agricultural Panel"
+        },
+        "house": {
+            "houseNo": "9",
+            "uri": "https://data.oireachtas.ie/ie/oireachtas/house/seanad/9",
+            "houseCode": "seanad",
+            "showAs": "9th Seanad"
+        }
+    }
+}
+]
