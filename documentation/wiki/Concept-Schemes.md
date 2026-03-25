@@ -46,14 +46,11 @@
 | oir:ReportStage |
 | oir:ReportSubStages |
 |                                         |
-| **oir:BillSource**   |
-| oir:GovernmentBill |
-| oir:PrivateBill  |
-| oir:PrivateMembersBill |
-|         |
 | **oir:BillEvent**  |
 | oir:BillStage  |
 | oir:LapsedBillEvent |
+| oir:Published |
+| oir:Enacted |
 | oir:BallotOrder |
 | oir:BillAmendment |
 | oir:BillAmendment2Amendment |
@@ -86,3 +83,16 @@
 | **oir:CarriedOutcome** |
 | oir:Agreed |
 | oir:DeclaredCarried |
+
+> **Note (2026):** Bill classification by origin (`oir:GovernmentBill`, `oir:PublicBill`, `oir:PrivateBill`, `oir:PrivateMembersBill`) is now typed as `eli-dl:ProcessType` instances rather than members of a SKOS concept scheme. The `oir:BillSource` concept scheme has been removed.
+
+| **oir:CommitteeType** |
+|---|
+| oir:SelectCommitteeType |
+| oir:JointCommitteeType |
+| oir:SpecialCommitteeType |
+
+| **oir:CommitteePurpose** |
+|---|
+| oir:PolicyPurpose |
+| oir:ShadowDepartmentPurpose |

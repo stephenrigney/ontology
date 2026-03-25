@@ -1,58 +1,84 @@
 ## Bill Properties
 
-| Property            |                                | Domain                              | Range                                                  | Notes                                                                                                      |
-|---------------------|--------------------------------|-------------------------------------|--------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
-| eli:is_part_of      |                                | Bill                                | Bills Book                                             |                                                                                                            |
-| eli:has_part        |                                | Bills Book                          | Bill                                                   |                                                                                                            |
-| eli:is_realized_by  |                                | Bill Resource                       | Bill Expression                                        |                                                                                                            |
-| eli:realizes        |                                | Bill Expression                     | Bill Resource                                          |                                                                                                            |
-| eli:is_embodied_by  |                                | Bill Expression                     | Bill Format                                            |                                                                                                            |
-| eli:embodies        |                                | Bill Format                         | Bill Expression                                        |                                                                                                            |
-| eli:uri_schema      |                                |                                     |                                                        | URL for resource describing schema??                                                                       |
-| eli:id_local        |                                | Bill Resource, Expression, Format   | either Bill URI or {year}-{no}                         |                                                                                                            |
-| eli:type_document   |                                | Bill Resource                       | eil:ResourceType                                       | Eg, Bill, Act, Explanatory Memorandum or Draft Bill. Consult w A.G.                                        |
-| eli:passed_by       |                                | Bill Resource (final stage)         | oir:oireachtas                                         | Perhaps oireachtas.ie should be the URI for the body corporate                                             |
-| eli:date_document   |                                | Bill Resource                       | xsd:Date                                               | Date of President's signature                                                                              |
-| eli:related_to      |                                | Bill Resource/Expression            | owl:Thing                                              | Use to relate to draft/heads of Bills, explanatory memos                                                   |
-| eli:language        |                                | Bill Expression                     | lang:ENG, lang:GLE or lang:MUL                         |                                                                                                            |
-| eli:title           |                                | Bill Expression                     | xsd:string(lang en or ga)                              | Short title, used for versions (LegalExpression) of Bill                                                   |
-| eli:published_in    |                                | Bill Format                         | eg, http://oireachtas.ie/legislative_observatory       | "publication in which legal resource is published", eg, website                                            |
-| eli:description     |                                | Bill Resource/Expression            | xsd:string(lang en or ga)                              | Bill long title                                                                                            |
-| eli:publisher       |                                | Bill Expression/Format              | xsd:String - "Houses of the Oireachtas Service"        | Or just "Houses of the Oireachtas" for historical compliance                                               |
-| eli:format          |                                | Bill Format                         | eg iana:text/xml, iana:text/html, iana:application/pdf |                                                                                                            |
-| eli:version         |                                | Bill Expression                     | eg, oir:as_initiated                                   | See concept scheme                                                                                         |
-| eli:version_date    |                                | Bill Expression                     | xsd:Date                                               | Date presented, passed or ordered to be printed                                                            |
-| eli:rightsholder    |                                | Bill Format                         | xsd:AnyURI oir:oireachtas                              |                                                                                                            |
-| eli:licence         |                                | Bill Format                         | xsd:AnyURI "http://oireachtas.ie/licence"              |                                                                                                            |
-| eli:legal_value     |                                | Bill Format                         | probably eli:LegalValue-authoritive                    |                                                                                                            |
-| dcterms:title       |                                | Bill Resource                       | xsd:string(lang en or ga)                              | Short title, for work (LegalResource) of Bill                                                              |
-|                     |                                |                                     |                                                        |                                                                                                            |
-|oir:source  |   |Bill Resource |oir:BillSource| Source of Bill (Government, Private or Private Member)
-| oir:originalTitle   |                                | Bill Resource                       | xsd:string(lang en or ga)                              | Short title of LegalResource as initiated                                                                  |
-| oir:amended         | frbr:realizer                  | oir:chamber                         | Bill Expression                                        | Dáil, Seanad or committee responsible for amended version                                                  |
-| oir:amendedBy       | frbr:realizerOf                | Bill Expression                     | oir:Chamber                                            | inverse of oir:amends                                                                                      |
-| oir:sponsored       | frbr:realizer                  | oir:role or oir:person              | Bill Expression                                        | Bill sponsor (this also covers relevant Minister in case of Seanad Bills)                                  |
-| oir:sponsoredBy     | frbr:realizerOf                | Bill Expression                     | oir:role or oir:person                                 | inverse of oir:sponsored                                                                                   |
-| oir:delivered       | lkif:actor                     | oir:role or oir:person              | Bill Work                                              | agent, ie, Minister, Member or private person, who introduced Bill                                         |
-| oir:deliveredBy     | lkif:actor_in                  | Bill Resource                       | oir:role or oir:person                                 | inverse of oir:delivered                                                                                   |
-| oir:enactedAs       | possibly frbr:transformationOf | Bill Resource                       | Act Resource                                           | relationship between Act and Bill                                                                          |
-| oir:enacts          | possibly frbr:transformation   | Act Resource                        | Bill Resource                                          |                                                                                                            |
-| oir:status          |                                | Bill Resource                       | oir:BillStatus                                         | The stage that the Bill has reached (see concept scheme)                                                   |
-| oir:inChamber       |                                | oir:BillEvent                       | oir:Chamber                                            | The House/committee in which a Bill event occurs                                                           |
-| metalex:agent       |                                | oir:Mover                           | oir:BillEvent                                          | The act of beginning an event by moving a motion/amendment or proposing a question                         |
-| oir:commenced       |                                | oir:BillEvent                       | xsd:Date or xsd:DateTime                               | The date on which the event commenced                                                                      |
-| oir:concluded       |                                | oir:BillEvent                       | xsd:Date or xsd:DateTime                               | Date on which event concluded                                                                              |
-| oir:debate          | metalex:matterOf               | oir:BillEvent                       | oir:debateRecord/dbsect                                | Reference to debate record(s) for event, at debateSection level                                            |
-| oir:debateOf     | metalex:matter                 | oir:debateRecord                    | oir:BillEvent                                          | inverse of oir:debateOn                                                                                    |
-| metalex:matter      |                                | oir:BillEvent                       | Bill Resource                                          | the subject mater (the Bill) of the event                                                                  |
-| metalex:matterOf    |                                | Bill Resource                       | oir:BillEvent                                          | inverse of metalex:matter                                                                                  |
-| metalex:result      |                                | oirBillEvent                        | metalex:Result                                         | How the motion/question/amendment was decided                                                              |
-| oir:eventDebate    |                                | oir:BillEvent                       | oir:debateRecord/dbsect#sum or para                    | The eId in the debateRecord where the event is moved/proposed, at paragraph/summary or debateSection level |
-| oir:eventDebateOf  |                                | oir:debateRecord/dbsect#sum or para | oir:BillEvent                                          | inverse of oir:eventSubject                                                                                |
-| oir:resultDebate   |                                | oir:BillEvent                       | oir:debateRecord/dbsect#sum or para                    | The eId in the debateRecord where the event is decided at paragraph/summary or debateSection level         |
-| oir:resultDebateOf |                                | oir:debateRecord/dbsect#sum or para | oir:BillEvent                                          | inverse of oir:resultContent                                                                               |
-| oir:amends         |  eli:changes                     | oir:BillAmendmentText                       | Bill Expression                                        | The version (expression) of the Bill which an amendment(s) modifies                                        |
-| oir:amended_by       | eli:changed_by                 | Bill Expression                     | oir:BillAmendmentText                                         | The version (expression) that is created on foot of an amendment(s)                                        |
-| metalex:predecessor |                                | Bill Expression, AmendmentList      | Bill Expression, AmendmentList                         | Is the preceeding version (expression) of a Bill or Amendment list                                         |
-| metalex:successor   |                                | Bill Expression, AmendmentList      | Bill Expression, AmendmentList                         | inverse of metalex:predecessor                                                                             |
+> **2026 update:** Several properties have been eliminated, renamed or replaced following the ELI-DL migration. `oir:hasBillType` is replaced by `eli-dl:process_type`; `oir:originalTitle` by `dct:alternative`; `oir:source` by `eli-dl:was_submitted_by`; `oir:inChamber` renamed to `events:inHouse`; `metalex:` properties removed. New properties added for API alignment. See the [ontology README](https://github.com/Oireachtas/ontology/blob/master/ontology/README.md) for the authoritative property reference.
+
+### Document properties (FRBR / ELI)
+
+| Property | Domain | Range | Notes |
+|---|---|---|---|
+| `eli:is_part_of` | Bill work | Bills book | |
+| `eli:has_part` | Bills book | Bill work | |
+| `eli:is_realized_by` | `eli:DraftLegislationWork` | `eli:LegalExpression` | |
+| `eli:realizes` | `eli:LegalExpression` | `eli:DraftLegislationWork` | |
+| `eli:is_embodied_by` | `eli:LegalExpression` | `eli:Format` | |
+| `eli:embodies` | `eli:Format` | `eli:LegalExpression` | |
+| `eli:id_local` | Bill work / expression / format | `xsd:string` | Bill identifier, e.g. `{year}/{no}` |
+| `eli:type_document` | Bill work | `eli:ResourceType` | E.g. Bill, Act, Explanatory Memorandum |
+| `eli:passed_by` | Bill work (final stage) | `agents:Oireachtas` | |
+| `eli:date_document` | Bill work | `xsd:date` | Date of President's signature |
+| `:dateSigned` | Bill work | `xsd:date` | Sub-property of `eli:date_document`; presidential signature date |
+| `eli:related_to` | Bill work / expression | `owl:Thing` | Relate to draft/heads of Bills, explanatory memos |
+| `eli:language` | Bill expression | `lang:ENG`, `lang:GLE` or `lang:MUL` | |
+| `eli:title` | Bill expression | `xsd:string` (lang en or ga) | Short title; used for versions (LegalExpression) |
+| `eli:published_in` | Bill format | e.g. `https://oireachtas.ie/legislative_observatory` | Publication in which legal resource is published |
+| `eli:description` | Bill work / expression | `xsd:string` (lang en or ga) | Bill long title |
+| `eli:publisher` | Bill expression / format | `xsd:string` | "Houses of the Oireachtas Service" |
+| `eli:format` | Bill format | e.g. `iana:text/xml`, `iana:application/pdf` | |
+| `eli:version` | Bill expression | e.g. `oir:AsInitiated` | See [Concept Schemes](Concept-Schemes) |
+| `eli:version_date` | Bill expression | `xsd:date` | Date presented, passed or ordered to be printed |
+| `eli:rightsholder` | Bill format | `xsd:anyURI` | `agents:Oireachtas` IRI |
+| `eli:licence` | Bill format | `xsd:anyURI` | e.g. `https://oireachtas.ie/licence` |
+| `eli:legal_value` | Bill format | `eli:LegalValue` | Probably `eli:LegalValue-authoritative` |
+| `dct:title` | Bill work | `xsd:string` (lang en or ga) | Short title for the work (LegalResource) |
+| `dct:alternative` | Bill work | `xsd:string` (lang en or ga) | Short title as initiated (replaces former `oir:originalTitle`) |
+| `dct:modified` | Bill work / expression | `xsd:dateTime` | API record update timestamp |
+| `:statuteBookURI` | Bill work | `xsd:anyURI` | Sub-property of `dct:relation`; Irish Statute Book cross-reference |
+| `:legislativeYear` | `eli-dl:DraftLegislationWork` | `xsd:integer` | Year component of `eli:id_local` |
+
+### Legislative process properties (ELI-DL)
+
+| Property | Domain | Range | Notes |
+|---|---|---|---|
+| `eli-dl:process_type` | `eli-dl:LegislativeProcess` | `eli-dl:ProcessType` | Bill type: `:PublicBill` or `:PrivateBill`; replaces former `oir:hasBillType` |
+| `eli-dl:process_number` | `eli-dl:LegislativeProcess` | `xsd:string` | Bill number within the legislative year |
+| `eli-dl:process_status` | `eli-dl:LegislativeProcess` | `skos:Concept` | Current bill status (see [Concept Schemes](Concept-Schemes)) |
+| `eli-dl:latest_activity` | `eli-dl:LegislativeProcess` | `eli-dl:LegislativeActivity` | Most recent bill stage/event; replaces former `oir:mostRecentStage` |
+| `eli-dl:was_submitted_by` | `eli-dl:LegislativeProcess` | `foaf:Agent` | Bill source: `agents:Government`, `agents:PrivateMember` or `agents:PrivateSponsor`; replaces former `oir:source` |
+| `:originHouse` | `eli-dl:DraftLegislationWork` | `agents:House` | House of introduction (Dáil or Seanad) |
+| `eli-dl:parliamentary_term` | `eli-dl:LegislativeActivity` | `agents:HouseTerm` | The Dáil or Seanad term in which the activity occurs |
+| `eli-dl:had_activity_type` | `eli-dl:LegislativeActivity` | `eli-dl:ActivityType` | E.g. `:LegislativeCreationActivity`, `:LegislativeDeliveryActivity`, `:LegislativeModificationActivity` |
+
+### Bill event properties
+
+| Property | Domain | Range | Notes |
+|---|---|---|---|
+| `events:inHouse` | `oir:BillEvent` | `agents:House` | The House/committee in which a bill event occurs; renamed from former `oir:inChamber` |
+| `oir:progressStage` | `eli-dl:LegislativeActivity` | `xsd:positiveInteger` | Cross-house sequential order (1 = First Stage Dáil … 10 = Enacted) |
+| `oir:stageNo` | `eli-dl:AmendmentToDraftLegislationWork` | `xsd:positiveInteger` | Stage within a single house at which an amendment list was tabled |
+| `:commenced` | `oir:BillEvent` | `xsd:dateTime` | Date on which the event commenced |
+| `:ended` | `oir:BillEvent` | `xsd:dateTime` | Date on which the event concluded |
+
+### Participation and amendment properties
+
+| Property | Domain | Range | Notes |
+|---|---|---|---|
+| `eli-dl:had_participation` | `eli-dl:LegislativeActivity` | `eli-dl:Participation` | Speaker / mover / rapporteur participation; `eli-dl:participation_role` on the participation node carries `members:MoverRole` or `members:RapporteurRole` |
+| `:isPrimarySponsor` | `eli-dl:Participation` | `xsd:boolean` | `true` for the primary bill sponsor; false/absent for secondary sponsors |
+| `oir:amends` | `eli:AmendmentToLegislationWork` | `eli:LegalExpression` | The version (expression) of the Bill which an amendment modifies (aligns with `eli:changes`) |
+| `oir:amended_by` | `eli:LegalExpression` | `eli:AmendmentToLegislationWork` | The version created on foot of an amendment (aligns with `eli:changed_by`) |
+| `:hasAmendmentListType` | `oir:AmendmentList` | `skos:Concept` | Type of amendment list: `:NumberedAmendmentList` or `:UnnumberedAmendmentList` |
+
+### Eliminated properties
+
+| Former property | Reason | Replacement |
+|---|---|---|
+| `oir:hasBillType` | Removed | `eli-dl:process_type` with `eli-dl:ProcessType` individual |
+| `oir:originalTitle` | Removed | `dct:alternative` |
+| `oir:source` | Removed | `eli-dl:was_submitted_by` |
+| `oir:inChamber` | Renamed | `events:inHouse` |
+| `oir:mostRecentStage` | Removed — duplicated `eli-dl:latest_activity` | `eli-dl:latest_activity` |
+| `metalex:agent` | Eliminated with metalex import | `eli-dl:had_participation` |
+| `metalex:result` | Eliminated with metalex import | `eli-dl:DecisionOutcome` as range of `oir:divisionOutcome` |
+| `metalex:predecessor` | Eliminated with metalex import | `eli:is_related_to` or ordering by `eli:version_date` |
+| `metalex:successor` | Eliminated with metalex import | as above |
 

@@ -1,14 +1,33 @@
 # [Debates](#debates)
 
-1. [FRBR Metadata](#frbr-metadata)
-2. [Voting Metadata](#voting-metadata)
-3. [TLC Metadata](#top-level-class-metadata)
-4. [Debate Body](Debates-body#debate-body)
+1. [OWL Ontology Alignment](#owl-ontology-alignment)
+2. [FRBR Metadata](#frbr-metadata)
+3. [Voting Metadata](#voting-metadata)
+4. [TLC Metadata](#top-level-class-metadata)
+5. [Debate Body](Debates-body#debate-body)
 
 
 Debates refer to the oral deliberations held by Members of the Oireachtas in the Dáil, Seanad or a committee of one of the Houses. For the most part debates are held in public session but committee debates may be private. Public debates are recorded on video and audio, as well as reported, or transcribed, in text form. While this page deals mainly with an ontology for textual representations of debates, the metadata elements of the ontology are applicable to multi-media formats also.
 
 The textual representations of debates are transcribed and lightly edited for the Official Report of Debates of the Dáil and Seanad (or `report` for short). The report is published as XML based on the [Akoma Ntoso](http://akomantoso.org) schema. The fields used and, where relevant, their mapping to the Oireachtas ontology are set out below; refer to the [Akoma Ntoso OASIS technical specifications](http://docs.oasis-open.org/legaldocml/akn-core/v1.0/csprd01/) for more complete documentation.
+
+## OWL Ontology Alignment
+
+The debates sub-ontology (`debates.owl`) maps the Akoma Ntoso structure to OWL classes and ELI-DL properties. The key mappings are:
+
+| OWL Class | Superclass | Maps to AKN |
+|---|---|---|
+| `:DebateRecord` | `foaf:Document` | `FRBRWork` — the debate as an intellectual work for a house/date |
+| `:DebateExpression` | *(bare OWL class)* | `FRBRExpression` — language-specific version (eng / gle / mul) |
+| `:DebateSitting` | `eli-dl:Activity` | The sitting activity that produces a `:DebateRecord`; never typed `eli-dl:LegislativeActivity` because a sitting may be mixed |
+| `:DebateSection` | — | `debateSection` — topic-bounded section; instances with `:refersToEvent` are additionally typed `eli-dl:LegislativeActivity` |
+| `:Speech` | — | `speech` — oral contribution by a Member or witness |
+| `:Division` | `eli-dl:Vote` | `debateSection[@name='division']` — a division in the chamber |
+| `:ParliamentaryQuestion` | — | `question` — a parliamentary question |
+
+Speaker participation is modelled via `eli-dl:had_participation` + `eli-dl:ParticipationRole`. Key participation roles: `:ChairRole` (Ceann Comhairle / Cathaoirleach), `members:MoverRole`, `members:RapporteurRole`, `:WitnessRole`.
+
+For the full class and property reference see [debates_ontology_outline.md](../debates_ontology_outline.md).
 
 
 
@@ -65,14 +84,14 @@ FRBRWork IRIs take the following pattern:
 For `FRBRWork/FRBRuri/@value`:
 
 ```
-http://oireachtas.ie/akn/ie/ontology/debateRecord/{house}/{date}
-http://oireachtas.ie/akn/ie/ontology/debateRecord/committee_of_public_accounts/2014-03-03
+https://data.oireachtas.ie/akn/ie/debateRecord/{house}/{date}
+https://data.oireachtas.ie/akn/ie/debateRecord/committee_of_public_accounts/2014-03-03
 ```
 Or, for the Dáil, where written answers are stored separately to the oral debate:
 
 ```
-http://oireachtas.ie/akn/ie/ontology/debateRecord/dail/2015-07-02/writtens
-http://oireachtas.ie/akn/ie/ontology/debateRecord/dail/2015-07-02/debate
+https://data.oireachtas.ie/akn/ie/debateRecord/dail/2015-07-02/writtens
+https://data.oireachtas.ie/akn/ie/debateRecord/dail/2015-07-02/debate
 ```
 
 In this case, the values ``writtens`` and ``debate`` are recorded as a FRBRname/@value attribute
@@ -80,14 +99,14 @@ In this case, the values ``writtens`` and ``debate`` are recorded as a FRBRname/
 For `FRBRWork/FRBRthis/@value`
 
 ```
-http://oireachtas.ie/akn/ie/ontology/debateRecord/{house}/{date}/{main or optional sub-part eId}
-http://oireachtas.ie/akn/ie/ontology/debateRecord/dail/2015-07-02/debate/dbsect_3
+https://data.oireachtas.ie/akn/ie/debateRecord/{house}/{date}/{main or optional sub-part eId}
+https://data.oireachtas.ie/akn/ie/debateRecord/dail/2015-07-02/debate/dbsect_3
 ```
 
 Where `house` is `dail`, `seanad` or lowercase committee name, with spaces replaced by underscores. Date is the date of debate. The eId is the internally unique (ie, unique for that date) identifier for a sub-element of the debate file. If the entire document is being retrieved, rather than a sub-component, it is identified as `main`, eg:
 
 ```
-http://oireachtas.ie/akn/ie/ontology/debateRecord/dail/2015-07-02/writtens/main
+https://data.oireachtas.ie/akn/ie/debateRecord/dail/2015-07-02/writtens/main
 ```
 
 
@@ -96,18 +115,16 @@ FRBRExpression IRIs extend FRBRWork IRIs with the following pattern:
 
 - For `FRBRExpression/FRBRuri/@value`:
 
-
 ```
 <FRBRWork-URI>/{lang}
-http://oireachtas.ie/akn/ie/ontology/debateRecord/committee_of_public_accounts/2014-03-03/mul
+https://data.oireachtas.ie/akn/ie/debateRecord/committee_of_public_accounts/2014-03-03/mul
 ```
 
 - For `FRBRExpression/FRBRthis/@value`:
 
-
 ```
 <FRBRWork-URI>/{lang}/{main or optional sub-part eId}
-http://oireachtas.ie/akn/ie/ontology/debateRecord/committee_of_public_accounts/2014-03-03/mul/dbsect_3
+https://data.oireachtas.ie/akn/ie/debateRecord/committee_of_public_accounts/2014-03-03/mul/dbsect_3
 ```
 
 Where {lang} is language used to transcribe the debate in a three letter code corresponding to ISO 639-2 alpha-3. The main codes used are as follows (as it is usually not possible to determine where Irish is spoken in a debate, the most common identifier `mul`):
@@ -125,7 +142,7 @@ FRBRManifestation IRIs extend FRBRExpression IRIs by the addition of the relevan
 
 ```
 <FRBRWork-URI>/{lang}/main.xml
-http://oireachtas.ie/akn/ie/ontology/debateRecord/committee_of_public_accounts/2014-03-03/mul/main.xml
+https://data.oireachtas.ie/akn/ie/debateRecord/committee_of_public_accounts/2014-03-03/mul/main.xml
 ```
 
 ### Voting metadata

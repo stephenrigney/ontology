@@ -263,7 +263,8 @@ Example division:
 |summary/@title="division"|Summary description of division and its outcome|
 |debateSection/debateSection/@name="ta"|Lists Members voting in favour of proposal|
 |debateSection/debateSection/@name="nil"|Lists Members voting against proposal|
-|debateSection/debateSection[@name=("nil" or "ta")/p/person|Name of individual voting member|
+|debateSection/debateSection/@name="staon"|Lists Members abstaining from the division (introduced 2026)|
+|debateSection/debateSection[@name=("nil", "ta", or "staon")/p/person|Name of individual voting member|
 |person/@refersTo|Reference to `TLCPerson/@eId`|
 |summary/@title="tellers"|Tellers for the division|
 |summary/@title="decision"|Outcome of division|

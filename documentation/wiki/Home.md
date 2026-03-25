@@ -4,18 +4,21 @@
 *This is a work in progress*
 
 1. [Introduction](#introduction)
-1. [Bills Ontology](Bills)
+1. [Bills](Bills)
+1. [Debates](Debates)
+1. [Members and Agents](Members)
+1. [Agents — Organisations and Roles](Agents)
 1. [Departments](Departments)
-2. [Members](Members)
-3. [Debates](Debates)
-2. [Namespaces](namespaces)
+1. [Concept Schemes](Concept-Schemes)
+1. [Ordering Business](Ordering-Business)
+2. [Namespaces](#namespaces)
 
 
 ### Introduction
 
 The Houses of the Oireachtas ontology attempts to describe the business processes and publications produced by the Houses of the Oireachtas within a formal vocabulary that allows documents, legislative events and entities to be linked programmatically.
 
-The ontology is being developed using the [web ontology language  (OWL)](http://www.w3.org/TR/owl-features/) and reuses other ontology schema wherever possible. These are listed in the [Referenced Schema](referenced-schema) section. The Oireachtas ontology extensively reuses the [European Legislative Identifier  (ELI)](http://publications.europa.eu/mdr/eli/documentation/) ontology and [CEN-Metalex](http://www.metalex.eu/), as well as the [Akoma Ntoso](http://www.akomantoso.org/) schema, all of which were designed for legislation and the legislative process.
+The ontology is being developed using the [web ontology language (OWL)](http://www.w3.org/TR/owl-features/) and reuses other ontology schema wherever possible. The Oireachtas ontology extensively reuses the [European Legislative Identifier (ELI)](http://publications.europa.eu/mdr/eli/documentation/) ontology and its draft-legislation extension [ELI-DL](http://data.europa.eu/eli/eli-draft-legislation-ontology), as well as the [Akoma Ntoso](http://www.akomantoso.org/) schema, all of which were designed for legislation and the legislative process.
 
 It is envisaged that the ontology will ultimately describe the following datasets from the Houses of the Oireachtas:
 - Bills and other legislation, including motions and amendments
@@ -28,11 +31,9 @@ It is envisaged that the ontology will ultimately describe the following dataset
 - Documents laid before the Houses
 - Committee reports and submissions
 
-This document deals only with the aspects of the ontology relating to Bills. Things from other datasets may be referenced but have not yet been formally defined.
+One of the core functions of any Parliament is to decide on the legal basis for the creation and dissolution of State bodies, and to set the scope of their functions. Where relevant and feasible, the descriptions of Departments, roles and offices in this ontology will include a link to the decision of the Oireachtas on their creation, modification or dissolution, thereby allowing the Oireachtas dataset to be used as an authority vocabulary for Departments and Ministerial roles.
 
-One of the core functions of any Parliament is to decide on the legal basis for the creation and dissolution of State bodies, and to set the scope of their functions. Where relevant (and feasible) the descriptions of Departments, roles and offices in this ontology will include a link to the decision of the Oireachtas on their creation, modification or dissolution, thereby allowing the Oireachtas dataset to be used as an authority vocabulary for Departments and Ministerial roles.
-
-The Oireachtas ontology in OWL format can be downloaded from [/data/oireachtas.owl](../tree/master/data/oireachtas.owl)
+For the current technical structure of the ontology, see the [ontology README](https://github.com/Oireachtas/ontology/blob/master/ontology/README.md).
 
 #### Terms used
 
@@ -43,7 +44,6 @@ As the Houses of the Oireachtas can be understand as different things depending 
 - The ``Houses of the Oireachtas`` refer to the Oireachtas and Service collectively.
 - The ``Houses`` refer to the Dáil and Seanad collectively, while individual houses are referred to as ``House``, ``Dáil`` or ``Seanad`` depending on the context.
 - A ``committee`` is a subset of one or both Houses given delegated powers either by direction of a House, under Standing Orders of a House or by law.
-- A ``chamber`` refers to either a House (ie, the Dáil or Seanad) or a committee of one or both of the Houses
 - A ``Member`` is an elected Member of the Oireachtas, a ``Deputy`` is a Member of the Dáil and a ``Senator`` is a Member of the Seanad.
 
 #### OWL and RDF syntax
@@ -58,48 +58,48 @@ Each element in an RDF statement is either a [Internationalised resource identif
 
 OWL ontologies can be divided into three primary types, ``classes``, ``properties`` ``literals``.  A ``class`` corresponds to an RDF subject or object, while a ``property`` corresponds to a predicate. It is possible to sub-class both ``classes`` and ``properties`` in a hierarchical manner, and a particular class or property may be the sub-class of multiple parent classes.
 
-OWL permits the reuse and adaptation of existing ontologies in the development of new ones. This is in fact quite important because describing things using terms common to multiple datasets facilitates the sharing of information across the web. For this reason, the Oireachtas ontology reuses a number of other ontologies, including in particular the [European Legislative Identifier  (ELI)](http://publications.europa.eu/mdr/eli/documentation/) ontology, which is designed to facilitate sharing and integration of legal resources across the European Union, and [CEN-Metalex](http://www.metalex.eu/), which was developed as an interchange format for legal data. However, given the particular nature of the material published by the Houses of the Oireachtas, as well as the procedures through which they are accorded legal status, it is also necessary in some cases to create our own models to properly describe things.
+OWL permits the reuse and adaptation of existing ontologies in the development of new ones. This is in fact quite important because describing things using terms common to multiple datasets facilitates the sharing of information across the web. For this reason, the Oireachtas ontology reuses a number of other ontologies, including in particular the [European Legislative Identifier (ELI)](http://publications.europa.eu/mdr/eli/documentation/) ontology, which is designed to facilitate sharing and integration of legal resources across the European Union, and its extension [ELI-DL](http://data.europa.eu/eli/eli-draft-legislation-ontology), which covers draft legislation and the legislative process. However, given the particular nature of the material published by the Houses of the Oireachtas, as well as the procedures through which they are accorded legal status, it is also necessary in some cases to create our own models to properly describe things.
 
 At a document level, [Akoma Ntoso](http://www.akomantoso.org/) is being adopted as an XML schema for publication of the Official Report of Debates, and is being evaluated for Bills. Akoma Ntoso was developed to represent legal, parliamentary and judicial documents in XML format, and is currently under review as an [OASIS](https://www.oasis-open.org/) open standard.
 
-To describe categories and taxonomies of things, including controlled vocabularies as ways to describe them, the [Simple Knowledge Organising Scheme (SKOS)](www.w3.org/TR/skos-reference/) ontology is used. Concept scheme tables can be found in [here](concept-schemes).
+To describe categories and taxonomies of things, including controlled vocabularies as ways to describe them, the [Simple Knowledge Organising Scheme (SKOS)](www.w3.org/TR/skos-reference/) ontology is used. Concept scheme tables can be found in [Concept-Schemes](Concept-Schemes).
 
 Elements of the [Data Catalog vocabulary (DCAT)](www.w3.org/TR/vocab-dcat/) will also be reused.
 
 #### URIs
 
-The namespace for the Oireachtas ontology is ``http://oireachtas.ie/ontology#``. The string ``oir:`` denotes that the following term is in the Oireachtas namespace. Class names are in camel case with all first letters of words capitalised: ``oir:BillFormat``. Property names are camel case with the very first letter in lower case: ``oir:amendedBy``
+The namespace for the Oireachtas ontology is ``https://data.oireachtas.ie/ontology#``. The string ``oir:`` denotes that the following term is in the Oireachtas namespace. Class names are in camel case with all first letters of words capitalised: ``oir:BillFormat``. Property names are camel case with the very first letter in lower case: ``oir:amendedBy``
 
-The namespace for URLs of instances of classes is ``http://oireachtas.ie`` and the patterns will be further described in the relevant sections.
+The namespace for URLs of instances of classes is ``https://data.oireachtas.ie`` and the patterns will be further described in the relevant sections.
 
 #### Schema Overview
 
-The ontology is divided into four main areas:
+The OWL ontology is split into six sub-ontologies. See the [ontology README](https://github.com/Oireachtas/ontology/blob/master/ontology/README.md) for the full class, property and named individual reference.
 
-- **Legislative Documents**  
-These are the documents published by the Oireachtas as part of a deliberative process in a chamber. The most important example of a legislative document is a Bill, which is a draft law, but legislative documents could also be Standing Orders governing the conduct of business in the Oireachtas; motions that are proposed, moved or agreed by a chamber; documents laid before the Oireachtas; and reports prepared by committees.  
+| Sub-ontology | Description |
+|---|---|
+| `agents.owl` | Persons, roles and organisations (Houses, Government, Members, Committees) |
+| `events.owl` | Journal events, bill stages and procedural outcomes |
+| `legislation.owl` | Legislative documents, versions and statuses |
+| `members.owl` | Membership, roles, party groupings and government tiers |
+| `vocabulary.owl` | SKOS controlled vocabularies (concept schemes) |
+| `debates.owl` | Official Report and debates — Akoma Ntoso structure, speeches, divisions and participation |
 
-- **Journal Events**  
-These are the procedures through which the business of the Oireachtas is planned and recorded, most importantly in respect of procedures that affect legislative documents during their lifecycle. They are recorded either in the Order Paper, for future events, or in the Official Report of debates, for events that have taken place.
-
-- **Debates**  
-These are the elements of the Official Report, or the transcribed record of debates in the chambers. Debates describe who said what, and also the journal events that took place in a chamber, for example, that an amendment to a Bill has been moved by a Member, considered by a chamber and agreed in accordance with Standing Orders. However, not all journal events are documented in the Official Report. For example, documents laid before the Houses, while formally acknowledged in a House, are recorded in the Order Paper rather than in the Official Report.
-
-- **Oireachtas Agents**  
-These are the entities who author, produce or modify legislative documents, journal events or debates. They include human individuals and the roles they occupy, such as Members, and collective entities, such as committees or houses. These roles and entities may be defined by legislation or be more informally defined, such as political parties.
-
-#### Hybrid Entities
-Some things within the ontology cannot be categorised neatly in to one category. For example, an amendment to a Bill is both a legislative document in its own right and a journal event in that it effects a modification of the Bill. For this reason, a thing in question might be classified under multiple classes.
+Conceptually, the subject matter falls into four areas: **Legislative Documents**, **Journal Events**, **Debates** and **Oireachtas Agents**. Some things straddle multiple areas — for example, an amendment to a Bill is both a legislative document and a journal event; such things are classified under multiple classes.
 
 
 
 ### Namespaces
 
-| prefix  | namespace                                                 |
-|---------|-----------------------------------------------------------|
-| eli     | http://data.europa.eu/eli/ontology#                       |
-| lang    | http://publications.europa.eu/resource/authority/language |
-| oir     | http://oireachtas.ie/ontology#                            |
-| iana    | http://www.iana.org/assignments/media-types/              |
-| metalex | http://www.metalex.eu/metalex/2008-05-02#                 |
-| rda     | http://www.rdaregistry.info/Elements/c/                   |
+| prefix  | namespace                                                              |
+|---------|------------------------------------------------------------------------|
+| oir     | https://data.oireachtas.ie/ontology#                                   |
+| eli     | http://data.europa.eu/eli/ontology#                                    |
+| eli-dl  | http://data.europa.eu/eli/eli-draft-legislation-ontology#              |
+| org     | http://www.w3.org/ns/org#                                              |
+| foaf    | http://xmlns.com/foaf/0.1/                                             |
+| skos    | http://www.w3.org/2004/02/skos/core#                                   |
+| dct     | http://purl.org/dc/terms/                                              |
+| dcat    | http://www.w3.org/ns/dcat#                                             |
+| lang    | http://publications.europa.eu/resource/authority/language              |
+| iana    | http://www.iana.org/assignments/media-types/                           |
